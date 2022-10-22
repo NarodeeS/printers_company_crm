@@ -11,7 +11,7 @@ import SwiftUI
 struct printers_company_crmApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
     }
 }

@@ -7,18 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0430FA7B29046751001E4CDD /* TasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430FA7A29046751001E4CDD /* TasksView.swift */; };
+		0430FA7D29046763001E4CDD /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430FA7C29046763001E4CDD /* MainView.swift */; };
 		0455161928FD972D0006F862 /* printers_company_crmApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455161828FD972D0006F862 /* printers_company_crmApp.swift */; };
-		0455161B28FD972D0006F862 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455161A28FD972D0006F862 /* ContentView.swift */; };
 		0455161D28FD972D0006F862 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0455161C28FD972D0006F862 /* Assets.xcassets */; };
 		0455162028FD972D0006F862 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0455161F28FD972D0006F862 /* Preview Assets.xcassets */; };
+		0455162828FD98FD0006F862 /* PostgresClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0455162728FD98FD0006F862 /* PostgresClientKit */; };
+		0455162A28FD993C0006F862 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455162928FD993C0006F862 /* LoginView.swift */; };
+		04B474F028FDE07D001BC58C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B474EF28FDE07D001BC58C /* User.swift */; };
+		04B474F228FDE40D001BC58C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B474F128FDE40D001BC58C /* AppState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0430FA7A29046751001E4CDD /* TasksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksView.swift; sourceTree = "<group>"; };
+		0430FA7C29046763001E4CDD /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		0455161528FD972D0006F862 /* printers-company-crm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "printers-company-crm.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0455161828FD972D0006F862 /* printers_company_crmApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = printers_company_crmApp.swift; sourceTree = "<group>"; };
-		0455161A28FD972D0006F862 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0455161C28FD972D0006F862 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0455161F28FD972D0006F862 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0455162928FD993C0006F862 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		04B474EF28FDE07D001BC58C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		04B474F128FDE40D001BC58C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0455162828FD98FD0006F862 /* PostgresClientKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,7 +62,11 @@
 			isa = PBXGroup;
 			children = (
 				0455161828FD972D0006F862 /* printers_company_crmApp.swift */,
-				0455161A28FD972D0006F862 /* ContentView.swift */,
+				0430FA7C29046763001E4CDD /* MainView.swift */,
+				0430FA7A29046751001E4CDD /* TasksView.swift */,
+				04B474F128FDE40D001BC58C /* AppState.swift */,
+				0455162928FD993C0006F862 /* LoginView.swift */,
+				04B474EF28FDE07D001BC58C /* User.swift */,
 				0455161C28FD972D0006F862 /* Assets.xcassets */,
 				0455161E28FD972D0006F862 /* Preview Content */,
 			);
@@ -83,6 +97,9 @@
 			dependencies = (
 			);
 			name = "printers-company-crm";
+			packageProductDependencies = (
+				0455162728FD98FD0006F862 /* PostgresClientKit */,
+			);
 			productName = "printers-company-crm";
 			productReference = 0455161528FD972D0006F862 /* printers-company-crm.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +128,9 @@
 				Base,
 			);
 			mainGroup = 0455160C28FD972D0006F862;
+			packageReferences = (
+				0455162628FD98FD0006F862 /* XCRemoteSwiftPackageReference "PostgresClientKit" */,
+			);
 			productRefGroup = 0455161628FD972D0006F862 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,7 +157,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0455161B28FD972D0006F862 /* ContentView.swift in Sources */,
+				0455162A28FD993C0006F862 /* LoginView.swift in Sources */,
+				0430FA7D29046763001E4CDD /* MainView.swift in Sources */,
+				0430FA7B29046751001E4CDD /* TasksView.swift in Sources */,
+				04B474F228FDE40D001BC58C /* AppState.swift in Sources */,
+				04B474F028FDE07D001BC58C /* User.swift in Sources */,
 				0455161928FD972D0006F862 /* printers_company_crmApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,6 +363,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0455162628FD98FD0006F862 /* XCRemoteSwiftPackageReference "PostgresClientKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/codewinsdotcom/PostgresClientKit";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0455162728FD98FD0006F862 /* PostgresClientKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0455162628FD98FD0006F862 /* XCRemoteSwiftPackageReference "PostgresClientKit" */;
+			productName = PostgresClientKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0455160D28FD972D0006F862 /* Project object */;
 }
