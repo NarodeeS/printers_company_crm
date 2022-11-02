@@ -16,6 +16,14 @@
 		0455162A28FD993C0006F862 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455162928FD993C0006F862 /* LoginView.swift */; };
 		04B474F028FDE07D001BC58C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B474EF28FDE07D001BC58C /* User.swift */; };
 		04B474F228FDE40D001BC58C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B474F128FDE40D001BC58C /* AppState.swift */; };
+		428228C3290E7117004FE0BC /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428228C2290E7117004FE0BC /* UserView.swift */; };
+		428228C7290E71C5004FE0BC /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428228C6290E71C5004FE0BC /* UsersView.swift */; };
+		428228C9290E78A2004FE0BC /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428228C8290E78A2004FE0BC /* Employee.swift */; };
+		42AE2373290DD5CD00CF49FE /* AddUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AE2372290DD5CD00CF49FE /* AddUserView.swift */; };
+		42AE2377290DD81800CF49FE /* DatabaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AE2376290DD81800CF49FE /* DatabaseAPI.swift */; };
+		42B319552911A92D00C57ABB /* Employees.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B319542911A92D00C57ABB /* Employees.swift */; };
+		42B319572911BE4300C57ABB /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B319562911BE4300C57ABB /* AddTaskView.swift */; };
+		42BED68C291261380056AA48 /* NumberLimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BED68B291261380056AA48 /* NumberLimiter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +36,14 @@
 		0455162928FD993C0006F862 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		04B474EF28FDE07D001BC58C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		04B474F128FDE40D001BC58C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		428228C2290E7117004FE0BC /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		428228C6290E71C5004FE0BC /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
+		428228C8290E78A2004FE0BC /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
+		42AE2372290DD5CD00CF49FE /* AddUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserView.swift; sourceTree = "<group>"; };
+		42AE2376290DD81800CF49FE /* DatabaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseAPI.swift; sourceTree = "<group>"; };
+		42B319542911A92D00C57ABB /* Employees.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employees.swift; sourceTree = "<group>"; };
+		42B319562911BE4300C57ABB /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
+		42BED68B291261380056AA48 /* NumberLimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberLimiter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,9 +80,17 @@
 				0455161828FD972D0006F862 /* printers_company_crmApp.swift */,
 				0430FA7C29046763001E4CDD /* MainView.swift */,
 				0430FA7A29046751001E4CDD /* TasksView.swift */,
+				42B319562911BE4300C57ABB /* AddTaskView.swift */,
+				428228C6290E71C5004FE0BC /* UsersView.swift */,
 				04B474F128FDE40D001BC58C /* AppState.swift */,
 				0455162928FD993C0006F862 /* LoginView.swift */,
 				04B474EF28FDE07D001BC58C /* User.swift */,
+				428228C2290E7117004FE0BC /* UserView.swift */,
+				42AE2372290DD5CD00CF49FE /* AddUserView.swift */,
+				42BED68B291261380056AA48 /* NumberLimiter.swift */,
+				42AE2376290DD81800CF49FE /* DatabaseAPI.swift */,
+				42B319542911A92D00C57ABB /* Employees.swift */,
+				428228C8290E78A2004FE0BC /* Employee.swift */,
 				0455161C28FD972D0006F862 /* Assets.xcassets */,
 				0455161E28FD972D0006F862 /* Preview Content */,
 			);
@@ -158,11 +182,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				0455162A28FD993C0006F862 /* LoginView.swift in Sources */,
+				42B319552911A92D00C57ABB /* Employees.swift in Sources */,
 				0430FA7D29046763001E4CDD /* MainView.swift in Sources */,
 				0430FA7B29046751001E4CDD /* TasksView.swift in Sources */,
+				428228C9290E78A2004FE0BC /* Employee.swift in Sources */,
+				42BED68C291261380056AA48 /* NumberLimiter.swift in Sources */,
 				04B474F228FDE40D001BC58C /* AppState.swift in Sources */,
 				04B474F028FDE07D001BC58C /* User.swift in Sources */,
+				42AE2377290DD81800CF49FE /* DatabaseAPI.swift in Sources */,
+				428228C3290E7117004FE0BC /* UserView.swift in Sources */,
 				0455161928FD972D0006F862 /* printers_company_crmApp.swift in Sources */,
+				428228C7290E71C5004FE0BC /* UsersView.swift in Sources */,
+				42AE2373290DD5CD00CF49FE /* AddUserView.swift in Sources */,
+				42B319572911BE4300C57ABB /* AddTaskView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

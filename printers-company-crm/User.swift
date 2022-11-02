@@ -18,17 +18,15 @@ final class User: Codable {
     var role: Role
     var username: String
     var password: String
-    var connection: Connection? = nil
     
     enum CodingKeys: CodingKey {
         case role, username, password
     }
     
-    init(role: Role, username: String, password: String, connection: Connection) {
+    init(role: Role, username: String, password: String) {
         self.role = role
         self.username = username
         self.password = password
-        self.connection = connection
     }
     
     init(from decoder: Decoder) throws {
@@ -36,8 +34,6 @@ final class User: Codable {
         self.role = try container.decode(Role.self, forKey: .role)
         self.username = try container.decode(String.self, forKey: .username)
         self.password = try container.decode(String.self, forKey: .password)
-        
-        connection = Self.getConnection(username: username, userPassword: password)
     }
     
     func encode(to encoder: Encoder) throws {
@@ -52,18 +48,4 @@ final class User: Codable {
         let encodedUser = try encoder.encode(self)
         UserDefaults.standard.setValue(encodedUser, forKey: "user")
     }
-    
-    static func getConnection(username: String, userPassword: String) -> Connection? {
-        var configuration = PostgresClientKit.ConnectionConfiguration()
-        configuration.host = AppState.databaseAddress!
-        configuration.port = Int(AppState.databasePort!)!
-        configuration.database = AppState.databaseName!
-        configuration.user = username
-        configuration.credential = .scramSHA256(password: userPassword)
-        
-        let connection = try? PostgresClientKit.Connection(configuration: configuration)
-        return connection
-    }
-    
-    
 }

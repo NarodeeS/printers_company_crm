@@ -16,16 +16,19 @@ struct MainView: View {
                 .tabItem {
                     Label("Tasks", systemImage: "tray.full.fill")
                 }
+            
+            UsersView()
+                .tabItem{
+                    Label("Users", systemImage: "person.fill")
+                }
         }
         .sheet(isPresented: $showingLoginSheet) {
             LoginView()
         }
-        .onAppear {
+        .onAppear{
             AppState.user = loadUser()
             if !AppState.userLoggedIn {
                 showingLoginSheet = true
-            } else {
-                print(AppState.user?.role ?? "None")
             }
         }
     }

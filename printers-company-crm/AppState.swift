@@ -23,10 +23,16 @@ struct AppState {
     }
     
     static var userLoggedIn: Bool {
-        if let _ = user?.connection {
+        do {
+            let connection = try DatabaseAPI.getConnection(username: user?.username ?? "Unknown",
+                                                           userPassword: user?.password ?? "Unknown")
+            defer {
+                connection.close()
+            }
             return true
-        } else {
-            return false
+        } catch {
+            print(error.localizedDescription)
         }
+        return false
     }
 }

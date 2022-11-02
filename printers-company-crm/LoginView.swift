@@ -24,21 +24,20 @@ struct LoginView: View {
                     .textInputAutocapitalization(.never)
                 Button("Login") {
                     do {
-                        if let connection = User.getConnection(username: username, userPassword: userPassword) {
-                            if let userRole = try getUserGroupRole(connection: connection, username: username) {
-                                AppState.user = User(role: userRole, username: username, password: userPassword, connection: connection)
-                                try AppState.user!.save()
-                                dismiss()
-                            } else {
-                                alertMessage = "Something went wrong..."
-                                showingConnectionError = true
-                            }
+                        if let userRole = try DatabaseAPI.getUserGroupRole(username: username, password: userPassword) {
+                            print(username + " " + userPassword)
+                            AppState.user = User(role: userRole, username: username, password: userPassword)
+                            try AppState.user!.save()
+                            dismiss()
+                        } else {
+                            alertMessage = "Something went wrong..."
+                            showingConnectionError = true
                         }
                     } catch PostgresError.socketError {
                         alertMessage = "The connection could not be established. Verify the validity of the entered data"
                         showingConnectionError = true
                     } catch {
-                        alertMessage = "There was an error"
+                        alertMessage = error.localizedDescription
                         showingConnectionError = true
                     }
                 }
@@ -47,57 +46,10 @@ struct LoginView: View {
             .alert("Error", isPresented: $showingConnectionError) {
                 Button("OK") {}
             } message: {
-                Text("Problems with connection. Check the input and try again")
+                Text(alertMessage)
             }
             .interactiveDismissDisabled()
         }
-    }
-    
-    // Получение групповой роли пользователя при подключении
-    func getUserGroupRole(connection: Connection, username: String) throws -> Role? {
-        if username == ProcessInfo.processInfo.environment["ADMIN_USERNAME"] {
-            return Role.admin
-        }
-        
-        var statementText = "SELECT oid FROM pg_roles WHERE rolname=$1;"
-        var statement = try connection.prepareStatement(text: statementText)
-        defer {
-            statement.close()
-        }
-        var cursor = try statement.execute(parameterValues: [username])
-        defer {
-            cursor.close()
-        }
-        if let row = try? cursor.next()?.get() {
-            let columns = row.columns
-            let userOid = try columns[0].int()
-            
-            statementText = "SELECT roleid FROM pg_auth_members WHERE member=$1;"
-            statement = try connection.prepareStatement(text: statementText)
-            cursor = try statement.execute(parameterValues: [userOid])
-            if let row = try? cursor.next()?.get() {
-                let columns = row.columns
-                let roleId = try columns[0].int()
-                
-                statementText = "SELECT rolname FROM pg_roles WHERE oid=$1"
-                statement = try connection.prepareStatement(text: statementText)
-                cursor = try statement.execute(parameterValues: [roleId])
-                if let row = try? cursor.next()?.get() {
-                    let columns = row.columns
-                    let rolename = try columns[0].string()
-                    
-                    switch rolename {
-                    case "manager":
-                        return Role.manager
-                    case "worker":
-                        return Role.worker
-                    default:
-                        return nil
-                    }
-                }
-            }
-        }
-        return nil
     }
 }
 

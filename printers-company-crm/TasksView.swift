@@ -15,6 +15,19 @@ struct TasksView: View {
             }
             .navigationTitle("Tasks")
             .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                if let userRole = AppState.user?.role {
+                    if userRole != Role.admin {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                // Add task sheet
+                            } label: {
+                                Image(systemName: "plus")
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
