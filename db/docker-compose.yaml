@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  postgres:
+    container_name: printers_db
+    image: my_postgres
+    build: "."
+    ports:
+      - 1234:5432
+    env_file:
+     - .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/db/
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+      - ./postgresql.conf:/app/postgresql.conf
+    command: >
+      -c config_file=/app/postgresql.conf
+      -c ssl=on 
+      -c ssl_cert_file=/var/ssl/server.crt
+      -c ssl_key_file=/var/ssl/server.key
