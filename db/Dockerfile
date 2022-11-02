@@ -23,4 +23,3 @@ RUN echo "export LC_ALL=en_US.UTF-8" >> ~/.bashrc
 RUN echo "export LANG=en_US.UTF-8" >> ~/.bashrc
 RUN echo "export LANGUAGE=en_US.UTF-8" >> ~/.bashrc
 
-# /var/lib/postgresql/data/db - папка, где нужно сгенерировать ssl-ключ и сертификат
