@@ -5,7 +5,7 @@ COPY script.sh /app
 
 RUN ["chmod", "+x", "./app/script.sh"]
 
-COPY new_creation.sql /app
+COPY creation.sql /app
 COPY script.sh /docker-entrypoint-initdb.d/
 COPY server.crt /var/ssl/
 COPY server.key /var/ssl/
