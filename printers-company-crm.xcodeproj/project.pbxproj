@@ -16,12 +16,15 @@
 		0455162A28FD993C0006F862 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455162928FD993C0006F862 /* LoginView.swift */; };
 		04B474F028FDE07D001BC58C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B474EF28FDE07D001BC58C /* User.swift */; };
 		04B474F228FDE40D001BC58C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B474F128FDE40D001BC58C /* AppState.swift */; };
-		428228C3290E7117004FE0BC /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428228C2290E7117004FE0BC /* UserView.swift */; };
-		428228C7290E71C5004FE0BC /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428228C6290E71C5004FE0BC /* UsersView.swift */; };
+		42364D272912AC9D00062374 /* AddEmployeeView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42364D262912AC9D00062374 /* AddEmployeeView-ViewModel.swift */; };
+		42364D292912BD6D00062374 /* LoginView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42364D282912BD6D00062374 /* LoginView-ViewModel.swift */; };
+		42364D2B2912C0FE00062374 /* MainView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42364D2A2912C0FE00062374 /* MainView-ViewModel.swift */; };
+		428228C3290E7117004FE0BC /* EmployeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428228C2290E7117004FE0BC /* EmployeeView.swift */; };
+		428228C7290E71C5004FE0BC /* EmployeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428228C6290E71C5004FE0BC /* EmployeesView.swift */; };
 		428228C9290E78A2004FE0BC /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428228C8290E78A2004FE0BC /* Employee.swift */; };
-		42AE2373290DD5CD00CF49FE /* AddUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AE2372290DD5CD00CF49FE /* AddUserView.swift */; };
+		42AE2373290DD5CD00CF49FE /* AddEmployeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AE2372290DD5CD00CF49FE /* AddEmployeeView.swift */; };
 		42AE2377290DD81800CF49FE /* DatabaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AE2376290DD81800CF49FE /* DatabaseAPI.swift */; };
-		42B319552911A92D00C57ABB /* Employees.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B319542911A92D00C57ABB /* Employees.swift */; };
+		42B319552911A92D00C57ABB /* EmployeesView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B319542911A92D00C57ABB /* EmployeesView-ViewModel.swift */; };
 		42B319572911BE4300C57ABB /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B319562911BE4300C57ABB /* AddTaskView.swift */; };
 		42BED68C291261380056AA48 /* NumberLimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BED68B291261380056AA48 /* NumberLimiter.swift */; };
 /* End PBXBuildFile section */
@@ -36,12 +39,15 @@
 		0455162928FD993C0006F862 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		04B474EF28FDE07D001BC58C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		04B474F128FDE40D001BC58C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		428228C2290E7117004FE0BC /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
-		428228C6290E71C5004FE0BC /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
+		42364D262912AC9D00062374 /* AddEmployeeView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddEmployeeView-ViewModel.swift"; sourceTree = "<group>"; };
+		42364D282912BD6D00062374 /* LoginView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginView-ViewModel.swift"; sourceTree = "<group>"; };
+		42364D2A2912C0FE00062374 /* MainView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView-ViewModel.swift"; sourceTree = "<group>"; };
+		428228C2290E7117004FE0BC /* EmployeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeView.swift; sourceTree = "<group>"; };
+		428228C6290E71C5004FE0BC /* EmployeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesView.swift; sourceTree = "<group>"; };
 		428228C8290E78A2004FE0BC /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
-		42AE2372290DD5CD00CF49FE /* AddUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserView.swift; sourceTree = "<group>"; };
+		42AE2372290DD5CD00CF49FE /* AddEmployeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEmployeeView.swift; sourceTree = "<group>"; };
 		42AE2376290DD81800CF49FE /* DatabaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseAPI.swift; sourceTree = "<group>"; };
-		42B319542911A92D00C57ABB /* Employees.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employees.swift; sourceTree = "<group>"; };
+		42B319542911A92D00C57ABB /* EmployeesView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmployeesView-ViewModel.swift"; sourceTree = "<group>"; };
 		42B319562911BE4300C57ABB /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
 		42BED68B291261380056AA48 /* NumberLimiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberLimiter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,20 +83,12 @@
 		0455161728FD972D0006F862 /* printers-company-crm */ = {
 			isa = PBXGroup;
 			children = (
+				42364D252912AA1800062374 /* models */,
+				42364D242912A9C500062374 /* utils */,
+				42364D232912A9B400062374 /* view-models */,
+				42364D222912A99F00062374 /* views */,
 				0455161828FD972D0006F862 /* printers_company_crmApp.swift */,
-				0430FA7C29046763001E4CDD /* MainView.swift */,
-				0430FA7A29046751001E4CDD /* TasksView.swift */,
-				42B319562911BE4300C57ABB /* AddTaskView.swift */,
-				428228C6290E71C5004FE0BC /* UsersView.swift */,
 				04B474F128FDE40D001BC58C /* AppState.swift */,
-				0455162928FD993C0006F862 /* LoginView.swift */,
-				04B474EF28FDE07D001BC58C /* User.swift */,
-				428228C2290E7117004FE0BC /* UserView.swift */,
-				42AE2372290DD5CD00CF49FE /* AddUserView.swift */,
-				42BED68B291261380056AA48 /* NumberLimiter.swift */,
-				42AE2376290DD81800CF49FE /* DatabaseAPI.swift */,
-				42B319542911A92D00C57ABB /* Employees.swift */,
-				428228C8290E78A2004FE0BC /* Employee.swift */,
 				0455161C28FD972D0006F862 /* Assets.xcassets */,
 				0455161E28FD972D0006F862 /* Preview Content */,
 			);
@@ -103,6 +101,49 @@
 				0455161F28FD972D0006F862 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		42364D222912A99F00062374 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				0455162928FD993C0006F862 /* LoginView.swift */,
+				0430FA7C29046763001E4CDD /* MainView.swift */,
+				0430FA7A29046751001E4CDD /* TasksView.swift */,
+				42B319562911BE4300C57ABB /* AddTaskView.swift */,
+				428228C6290E71C5004FE0BC /* EmployeesView.swift */,
+				428228C2290E7117004FE0BC /* EmployeeView.swift */,
+				42AE2372290DD5CD00CF49FE /* AddEmployeeView.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		42364D232912A9B400062374 /* view-models */ = {
+			isa = PBXGroup;
+			children = (
+				42B319542911A92D00C57ABB /* EmployeesView-ViewModel.swift */,
+				42364D262912AC9D00062374 /* AddEmployeeView-ViewModel.swift */,
+				42364D282912BD6D00062374 /* LoginView-ViewModel.swift */,
+				42364D2A2912C0FE00062374 /* MainView-ViewModel.swift */,
+			);
+			path = "view-models";
+			sourceTree = "<group>";
+		};
+		42364D242912A9C500062374 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				42BED68B291261380056AA48 /* NumberLimiter.swift */,
+				42AE2376290DD81800CF49FE /* DatabaseAPI.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
+		42364D252912AA1800062374 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				428228C8290E78A2004FE0BC /* Employee.swift */,
+				04B474EF28FDE07D001BC58C /* User.swift */,
+			);
+			path = models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,18 +223,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				0455162A28FD993C0006F862 /* LoginView.swift in Sources */,
-				42B319552911A92D00C57ABB /* Employees.swift in Sources */,
+				42364D2B2912C0FE00062374 /* MainView-ViewModel.swift in Sources */,
+				42364D292912BD6D00062374 /* LoginView-ViewModel.swift in Sources */,
+				42B319552911A92D00C57ABB /* EmployeesView-ViewModel.swift in Sources */,
 				0430FA7D29046763001E4CDD /* MainView.swift in Sources */,
 				0430FA7B29046751001E4CDD /* TasksView.swift in Sources */,
+				42364D272912AC9D00062374 /* AddEmployeeView-ViewModel.swift in Sources */,
 				428228C9290E78A2004FE0BC /* Employee.swift in Sources */,
 				42BED68C291261380056AA48 /* NumberLimiter.swift in Sources */,
 				04B474F228FDE40D001BC58C /* AppState.swift in Sources */,
 				04B474F028FDE07D001BC58C /* User.swift in Sources */,
 				42AE2377290DD81800CF49FE /* DatabaseAPI.swift in Sources */,
-				428228C3290E7117004FE0BC /* UserView.swift in Sources */,
+				428228C3290E7117004FE0BC /* EmployeeView.swift in Sources */,
 				0455161928FD972D0006F862 /* printers_company_crmApp.swift in Sources */,
-				428228C7290E71C5004FE0BC /* UsersView.swift in Sources */,
-				42AE2373290DD5CD00CF49FE /* AddUserView.swift in Sources */,
+				428228C7290E71C5004FE0BC /* EmployeesView.swift in Sources */,
+				42AE2373290DD5CD00CF49FE /* AddEmployeeView.swift in Sources */,
 				42B319572911BE4300C57ABB /* AddTaskView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct UsersView: View {
-    @StateObject private var employees: Employees = Employees()
+struct EmployeesView: View {
+    @StateObject private var viewModel = ViewModel()
     @State private var showingCreateUserView = false
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(employees.employee_list) { employee in
+                ForEach(viewModel.employee_list) { employee in
                     NavigationLink {
                         Text("Employee info")
                     } label: {
@@ -46,10 +46,10 @@ struct UsersView: View {
                 }
             }
             .sheet(isPresented: $showingCreateUserView) {
-                AddUserView(employees: employees)
+                AddEmployeeView(viewModel: viewModel)
             }
             .onAppear {
-                self.employees.employee_list = DatabaseAPI.getUsers()
+                viewModel.loadEmployees()
             }
         }
     }

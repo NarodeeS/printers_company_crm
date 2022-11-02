@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
-    @State private var showingLoginSheet = false
+    @StateObject private var viewModel = ViewModel()
     
     var body: some View {
         TabView {
@@ -17,18 +17,18 @@ struct MainView: View {
                     Label("Tasks", systemImage: "tray.full.fill")
                 }
             
-            UsersView()
+            EmployeesView()
                 .tabItem{
                     Label("Users", systemImage: "person.fill")
                 }
         }
-        .sheet(isPresented: $showingLoginSheet) {
+        .sheet(isPresented: $viewModel.showingLoginSheet) {
             LoginView()
         }
         .onAppear{
             AppState.user = loadUser()
             if !AppState.userLoggedIn {
-                showingLoginSheet = true
+                viewModel.showingLoginSheet = true
             }
         }
     }
