@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddEmployeeView: View {
     private let passwordLength = 12
-    private var positionsCodes = DatabaseAPI.getPositionCodes()
+    private var positionsCodes = DatabaseAPI.getClassifierValues(tableName: "positions_classifier")
     
     @StateObject private var viewModel = ViewModel()
     @ObservedObject private var employeesViewViewModel: EmployeesView.ViewModel
@@ -60,17 +60,17 @@ struct AddEmployeeView: View {
                         }
                     }
                     Button("Generate password") {
-                        viewModel.setGeneratedPassword(length: 10)
+                        viewModel.setGeneratedPassword(length: passwordLength)
                     }
                 }
                 Section {
                     TextField("Email", text: $viewModel.email)
                         .autocapitalization(.none)
                         .keyboardType(.emailAddress)
-                    TextField("Phone number", value: $viewModel.mobilePhone.value, formatter: phoneFieldFormatter)
+                    TextField("Phone number", value: $viewModel.mobile.value, formatter: phoneFieldFormatter)
                         .autocorrectionDisabled(true)
                         .keyboardType(.numberPad)
-                    Picker("Position code", selection: $viewModel.positionCode) {
+                    Picker("Role", selection: $viewModel.positionCode) {
                         ForEach(Array(positionsCodes.keys), id: \.self) {
                             if let value = positionsCodes[$0] {
                                 Text(value)
@@ -79,23 +79,16 @@ struct AddEmployeeView: View {
                     }
                     Button("Submit") {
                         do {
-                            try DatabaseAPI.createUser(name: viewModel.name, surname: viewModel.surname,
-                                                       login: viewModel.login, password: viewModel.password,
-                                                       mobilePhone: viewModel.mobilePhone.value, email: viewModel.email,
-                                                       positionCode: viewModel.positionCode)
-                            var role = Role.admin
-                            switch viewModel.positionCode {
-                            case 1:
-                                role = Role.manager
-                            case 2:
-                                role = Role.worker
-                            default:
-                                role = Role.admin
-                            }
-                            employeesViewViewModel
-                                .addEmployee(employee: Employee(name: viewModel.name, surname: viewModel.surname,
-                                                                login: viewModel.login, mobile: viewModel.mobilePhone.value,
-                                                                email: viewModel.email, role: role))
+                            let creationStatementText = Employee
+                                .getCreateStatementText(name: viewModel.name,
+                                                        surname: viewModel.surname,
+                                                        login: viewModel.login,
+                                                        password: viewModel.password,
+                                                        mobile: viewModel.mobile.value,
+                                                        email: viewModel.email,
+                                                        positionCode: viewModel.positionCode)
+                            try DatabaseAPI.executeStatement(statementText: creationStatementText)
+                            employeesViewViewModel.loadEmployees()
                             viewModel.alertTitle = "New user created"
                             viewModel.alertMessage = "Do not forget to give login and password to the employee"
                         }

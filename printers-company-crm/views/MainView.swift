@@ -11,19 +11,33 @@ struct MainView: View {
     @StateObject private var viewModel = ViewModel()
     
     var body: some View {
-        TabView {
-            TasksView()
+        TabView(selection: $viewModel.tabSelection) {
+            ProfileView(mainViewViewModel: viewModel)
                 .tabItem {
-                    Label("Tasks", systemImage: "tray.full.fill")
+                    Label("Profile", systemImage: "person")
                 }
+                .tag(1)
+            
+            WorkView()
+                .tabItem {
+                    Label("Work", systemImage: "tray.full.fill")
+                }
+                .tag(2)
+            
+            ClientsView()
+                .tabItem{
+                    Label("Clients", systemImage: "person.line.dotted.person")
+                }
+                .tag(3)
             
             EmployeesView()
-                .tabItem{
-                    Label("Users", systemImage: "person.fill")
+                .tabItem {
+                    Label("Users", systemImage: "person.3")
                 }
+                .tag(4)
         }
         .sheet(isPresented: $viewModel.showingLoginSheet) {
-            LoginView()
+            LoginView(tabSelection: $viewModel.tabSelection)
         }
         .onAppear{
             AppState.user = loadUser()

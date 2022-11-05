@@ -14,7 +14,7 @@ extension AddEmployeeView {
         @Published var login = ""
         @Published var password = ""
         @Published var secured = true
-        @Published var mobilePhone = NumberLimiter(limit: 11)
+        @Published var mobile = NumberLimiter(limit: 11)
         @Published var email = ""
         @Published var positionCode = 1
         @Published var showingAlert = false

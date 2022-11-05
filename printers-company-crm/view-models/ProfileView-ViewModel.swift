@@ -1,5 +1,5 @@
 //
-//  MainView-ViewModel.swift
+//  ProfileView-ViewModel.swift
 //  printers-company-crm
 //
 //  Created by George Stykalin on 02.11.2022.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-extension MainView {
+extension ProfileView {
     @MainActor class ViewModel: ObservableObject {
-        @Published var tabSelection = 1
-        @Published var showingLoginSheet = false
+        @Published var user: User? = nil
+        @Published var employeeInfo: Employee? = nil
     }
 }

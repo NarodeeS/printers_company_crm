@@ -166,6 +166,10 @@ GRANT INSERT(planned_completion_date, task_details,
              priority_code, task_type_code, 
              person_number, contract_number, author_number) ON tasks TO worker; 
 
+GRANT INSERT ON employees TO admin;
+
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO manager;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO worker;
 GRANT INSERT ON tasks, contracts, contact_persons, organizations TO manager;
 
 GRANT UPDATE(performer_number) ON tasks TO manager;
@@ -446,4 +450,5 @@ BEGIN
     RETURN;
 END; $$
 LANGUAGE plpgsql;
+
 

@@ -10,9 +10,12 @@ import Foundation
 extension EmployeesView {
     @MainActor class ViewModel: ObservableObject {
         @Published private(set) var employee_list = [Employee]()
+        @Published var user: User? = nil
+        @Published var showingCreateUserView = false
         
         func loadEmployees() {
-            employee_list = DatabaseAPI.getUsers()
+            employee_list = DatabaseAPI.getDataObjects(statementText: Employee.getAllStatementText,
+                                                       ofType: Employee.self)
         }
         
         func addEmployee(employee: Employee) {

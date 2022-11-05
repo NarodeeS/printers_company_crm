@@ -10,6 +10,7 @@ import PostgresClientKit
 
 struct LoginView: View {
     @StateObject private var viewModel = ViewModel()
+    @Binding var tabSelection: Int
     
     @Environment(\.dismiss) private var dismiss
     
@@ -18,21 +19,21 @@ struct LoginView: View {
             Form {
                 TextField("Enter your username", text: $viewModel.username)
                     .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled(true)
                 SecureField("Enter your password", text: $viewModel.userPassword)
                     .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled(true)
                 Button("Login") {
                     do {
-                        if let userRole = try DatabaseAPI.getUserGroupRole(username: viewModel.username,
-                                                                           password: viewModel.userPassword) {
-                            AppState.user = User(role: userRole,
+                        if let userGroup = try DatabaseAPI.getUserGroupRole(username: viewModel.username,
+                                                                            password: viewModel.userPassword) {
+                            AppState.user = User(role: userGroup,
                                                  username: viewModel.username,
                                                  password: viewModel.userPassword)
                             try AppState.user!.save()
-                            dismiss()
-                        } else {
-                            viewModel.alertMessage = "Something went wrong..."
-                            viewModel.showingConnectionError = true
+                            tabSelection = 2
                         }
+                        dismiss()
                     } catch PostgresError.socketError {
                         viewModel.alertMessage = "The connection could not be established. Verify the validity of the entered data"
                         viewModel.showingConnectionError = true
@@ -50,11 +51,5 @@ struct LoginView: View {
             }
             .interactiveDismissDisabled()
         }
-    }
-}
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
     }
 }

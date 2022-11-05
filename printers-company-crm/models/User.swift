@@ -14,10 +14,10 @@ enum Role: String, Codable {
     case manager = "Manager"
 }
 
-final class User: Codable {
-    var role: Role
-    var username: String
-    var password: String
+final class User: Codable, ObservableObject {
+    @Published var role: Role
+    @Published var username: String
+    @Published var password: String
     
     enum CodingKeys: CodingKey {
         case role, username, password
@@ -47,5 +47,9 @@ final class User: Codable {
         let encoder = JSONEncoder()
         let encodedUser = try encoder.encode(self)
         UserDefaults.standard.setValue(encodedUser, forKey: "user")
+    }
+    
+    func delete() {
+        UserDefaults.standard.removeObject(forKey: "user")
     }
 }

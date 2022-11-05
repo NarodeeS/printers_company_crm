@@ -19,3 +19,4 @@ services:
       -c ssl=on 
       -c ssl_cert_file=/var/ssl/server.crt
       -c ssl_key_file=/var/ssl/server.key
+

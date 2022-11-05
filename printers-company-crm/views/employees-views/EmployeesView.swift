@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EmployeesView: View {
     @StateObject private var viewModel = ViewModel()
-    @State private var showingCreateUserView = false
     
     var body: some View {
         NavigationView {
@@ -33,23 +32,27 @@ struct EmployeesView: View {
             }
             .navigationTitle("Users")
             .toolbar {
-                if let userRole = AppState.user?.role {
+                if let userRole = viewModel.user?.role {
                     if userRole == Role.admin {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button {
-                                showingCreateUserView = true
+                                viewModel.showingCreateUserView = true
                             } label: {
-                                Image(systemName: "person.crop.circle.badge.plus")
+                                Image(systemName: "person.fill.badge.plus")
                             }
                         }
                     }
                 }
             }
-            .sheet(isPresented: $showingCreateUserView) {
+            .sheet(isPresented: $viewModel.showingCreateUserView) {
                 AddEmployeeView(viewModel: viewModel)
+            }
+            .refreshable {
+                viewModel.loadEmployees()
             }
             .onAppear {
                 viewModel.loadEmployees()
+                viewModel.user = AppState.user
             }
         }
     }
