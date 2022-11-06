@@ -29,15 +29,30 @@ struct ProfileView: View {
                                     Text(user.surname)
                                 }
                                 .font(.title)
-                                .padding(.bottom)
-                                Text("Login: " + user.login)
-                                    .font(.title2.italic())
-                                Text("Phone number: " + String(user.mobile))
-                                    .font(.title2.italic())
-                                Text("Email: " + user.email)
-                                    .font(.title2.italic())
-                                Text("Role: " + user.role.rawValue)
-                                    .font(.title2.italic())
+                                .padding()
+                                List {
+                                    HStack {
+                                        Text("Login: ")
+                                            .bold()
+                                        Text(user.login)
+                                    }
+                                    HStack {
+                                        Text("Phone number: ")
+                                            .bold()
+                                        Text(String(user.mobile))
+                                    }
+                                    HStack {
+                                        Text("Email: ")
+                                            .bold()
+                                        Text(user.email)
+                                    }
+                                    HStack {
+                                        Text("Role: ")
+                                            .bold()
+                                        Text(user.role.rawValue)
+                                    }
+                                }
+                                .listStyle(.inset)
                             }
                         }
                     }
@@ -45,7 +60,6 @@ struct ProfileView: View {
                 }
                 Spacer()
             }
-            .padding()
             .navigationTitle("Profile")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

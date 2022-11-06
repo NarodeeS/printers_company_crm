@@ -11,5 +11,19 @@ extension AddContractView {
     @MainActor class ViewModel: ObservableObject {
         @Published var contractDetails = ""
         @Published var organizationNumber = 1
+        @Published var showAlert = false
+        @Published var alertTitle = ""
+        @Published var alertMessage = ""
+        @Published var organizationCodes = [Int: Organization]()
+        
+        func loadOrganizations() {
+            let organizations = DatabaseAPI
+                .getDataObjects(statementText: Organization.getAllStatementText,
+                                ofType: Organization.self)
+            
+            for organization in organizations {
+                organizationCodes[organization.id] = organization
+            }
+        }
     }
 }

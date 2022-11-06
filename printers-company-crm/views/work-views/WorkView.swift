@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WorkView: View {
     @StateObject private var viewModel = ViewModel()
+    private var priorityCodes = [Int: String]()
     
     var body: some View {
         NavigationView {
@@ -18,18 +19,61 @@ struct WorkView: View {
                         Text($0.rawValue)
                     }
                 }
-                .padding(.bottom)
+                .padding()
                 .pickerStyle(.segmented)
-                
                 switch viewModel.viewType {
                 case .tasks:
-                    TasksView()
+                    List {
+                        ForEach(viewModel.tasks) { task in
+                            NavigationLink {
+                                
+                            } label: {
+                                VStack(alignment: .leading) {
+                                    if let taskType = viewModel.tasksTypes[task.taskTypeCode],
+                                       let priority = viewModel.priorityCodes[task.priorityCode] {
+                                        HStack {
+                                            Text(taskType)
+                                            Spacer()
+                                            Text(priority)
+                                        }
+                                        .bold()
+                                        if let plannedDate = task.plannedVompletionDate {
+                                            Text(plannedDate.formatted())
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .refreshable {
+                        viewModel.loadTasks()
+                    }
                 case .contracts:
-                    ContractsView()
+                    List {
+                        ForEach(viewModel.contracts) { contract in
+                            NavigationLink {
+                                if let organization = viewModel.getOrganizationById(id: contract.organizationNumber) {
+                                    ContractDetailsView(selectedContract: contract, organization: organization)
+                                }
+                            } label: {
+                                VStack(alignment: .leading) {
+                                    Text("Contract №" + String(contract.id))
+                                        .bold()
+                                    if let organization = viewModel.getOrganizationById(id: contract.organizationNumber) {
+                                        Text("Organization: " + organization.organizationName
+                                            + " (id: \(organization.id))")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .refreshable {
+                        viewModel.loadContracts()
+                        viewModel.loadOrganizations()
+                    }
                 }
                 Spacer()
             }
-            .padding()
             .navigationTitle("Work")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
@@ -56,11 +100,16 @@ struct WorkView: View {
                 case .tasks:
                     AddTaskView()
                 case .contracts:
-                    AddContractView()
+                    AddContractView(workViewViewModel: viewModel)
                 }
             }
             .onAppear {
+                viewModel.loadTaskTypes()
+                viewModel.loadPriorityCodes()
                 viewModel.user = AppState.user
+                viewModel.loadTasks()
+                viewModel.loadContracts()
+                viewModel.loadOrganizations()
             }
         }
     }

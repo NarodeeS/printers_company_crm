@@ -13,6 +13,11 @@ struct ContactPersonDetailsView: View {
     var body: some View {
         List {
             HStack {
+                Text("Person ID: ")
+                    .bold()
+                Text(String(contactPerson.id))
+            }
+            HStack {
                 Text("Mobile phone: ")
                     .bold()
                 Text(String(contactPerson.personMobileNumber))
@@ -28,6 +33,7 @@ struct ContactPersonDetailsView: View {
                 Text(String(contactPerson.personMail))
             }
         }
+        .listStyle(.inset)
         .navigationTitle(contactPerson.personName)
         .navigationBarTitleDisplayMode(.inline)
     }

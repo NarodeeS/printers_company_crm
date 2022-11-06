@@ -15,7 +15,7 @@ struct EmployeesView: View {
             List {
                 ForEach(viewModel.employee_list) { employee in
                     NavigationLink {
-                        Text("Employee info")
+                        EmployeeDetailsView(employee: employee)
                     } label: {
                         VStack(alignment: .leading) {
                             HStack {

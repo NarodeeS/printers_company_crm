@@ -23,6 +23,12 @@ class Contract: Identifiable, RowDerivable {
         self.organizationNumber = organizationNumber
     }
     
+    static func createCreationStatement(contractDetails: String,
+                                        organizationNumber: Int) -> String {
+        return "INSERT INTO contracts(contract_details, organization_number) "
+             + "VALUES ('\(contractDetails)', \(organizationNumber));"
+    }
+    
     static func createFromRow(row: Result<Row, Error>) throws -> Contract {
         let columns = try row.get().columns
         let contractNumber = try columns[0].int()

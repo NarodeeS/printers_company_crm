@@ -46,7 +46,7 @@ struct ClientDetailsView: View {
                             ContactPersonDetailsView(contactPerson: person)
                         } label: {
                             VStack(alignment: .leading) {
-                                Text(person.personName)
+                                Text(person.personName + " (id: \(person.id))")
                                     .bold()
                                 Text(person.personEmail)
                             }
