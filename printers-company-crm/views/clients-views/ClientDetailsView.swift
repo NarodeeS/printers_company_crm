@@ -9,59 +9,53 @@ import SwiftUI
 
 struct ClientDetailsView: View {
     @StateObject var viewModel = ViewModel()
-    @State private var selectedOrganization: Organization
-    @State private var contactPersons: [ContactPerson]
+    private var selectedOrganization: Organization
     
     init(organization: Organization) {
         selectedOrganization = organization
-        
-        contactPersons = DatabaseAPI
-            .getDataObjects(statementText: ContactPerson.getAllStatementText,
-                            ofType: ContactPerson.self)
     }
     
     var body: some View {
-            VStack {
-                List {
-                    Section("Organization details") {
-                        HStack {
-                            Text("Email: ")
-                                .bold()
-                            Text(selectedOrganization.organizationEmail)
-                        }
-                        HStack {
-                            Text("Mail address: ")
-                                .bold()
-                            Text(selectedOrganization.organizationMail)
-                        }
-                        HStack {
-                            Text("City: ")
-                                .bold()
-                            Text(selectedOrganization.organizationCity)
-                        }
-                        HStack {
-                            Text("Status: ")
-                                .bold()
-                            Text(selectedOrganization.organizationStatus.rawValue)
-                        }
+        VStack {
+            List {
+                Section("Organization details") {
+                    HStack {
+                        Text("Email: ")
+                            .bold()
+                        Text(selectedOrganization.organizationEmail)
                     }
-                    Section("Contact persons") {
-                        ForEach(contactPersons) { person in
-                            NavigationLink {
-                                // Show contact person details
-                            } label: {
-                                VStack(alignment: .leading) {
-                                    Text(person.personName)
-                                        .bold()
-                                    Text(person.personEmail)
-                                }
+                    HStack {
+                        Text("Mail address: ")
+                            .bold()
+                        Text(selectedOrganization.organizationMail)
+                    }
+                    HStack {
+                        Text("City: ")
+                            .bold()
+                        Text(selectedOrganization.organizationCity)
+                    }
+                    HStack {
+                        Text("Status: ")
+                            .bold()
+                        Text(selectedOrganization.organizationStatus.rawValue)
+                    }
+                }
+                Section("Contact persons") {
+                    ForEach(viewModel.contactPersons) { person in
+                        NavigationLink {
+                            ContactPersonDetailsView(contactPerson: person)
+                        } label: {
+                            VStack(alignment: .leading) {
+                                Text(person.personName)
+                                    .bold()
+                                Text(person.personEmail)
                             }
                         }
                     }
                 }
-                Spacer()
             }
-        
+            Spacer()
+        }
         .navigationTitle(selectedOrganization.organizationName)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -69,7 +63,7 @@ struct ClientDetailsView: View {
                 if let user = viewModel.user {
                     if user.role == .manager {
                         Button {
-                            // Show contact person creation sheet
+                            viewModel.showAddPersonView = true
                         } label: {
                             Image(systemName: "person.fill.badge.plus")
                         }
@@ -78,14 +72,18 @@ struct ClientDetailsView: View {
             }
         }
         .refreshable {
-            contactPersons = DatabaseAPI
-                .getDataObjects(statementText: ContactPerson.getAllStatementText,
-                                ofType: ContactPerson.self)
+            viewModel.loadContactPersons()
+        }
+        .sheet(isPresented: $viewModel.showAddPersonView) {
+            AddPersonView(organizationNumber: selectedOrganization.id,
+                          clientDetailsViewViewModel: viewModel)
         }
         .onAppear {
             if let user = AppState.user {
                 viewModel.user = user
             }
+            viewModel.organization = selectedOrganization
+            viewModel.loadContactPersons()
         }
     }
 }

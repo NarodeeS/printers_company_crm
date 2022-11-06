@@ -31,6 +31,20 @@ class ContactPerson: Identifiable, RowDerivable {
         self.organizationNumber = organizationNumber
     }
     
+    static func createGetByOrgNumberStatement(orgNumber: Int) -> String {
+        return "SELECT * FROM contact_persons WHERE (organization_number = \(orgNumber));"
+    }
+    
+    static func createCreationStatement(personName: String, personMobile: Int64,
+                                        personEmail: String, personMail: String,
+                                        organizationNumber: Int) -> String {
+        return "INSERT INTO contact_persons(person_name, person_mobile_number,"
+                                         + "person_email, person_mail, "
+                                         + "organization_number)"
+             + " VALUES('\(personName)', \(personMobile), "
+                     + "'\(personEmail)', '\(personMail)', \(organizationNumber));"
+    }
+    
     static func createFromRow(row: Result<Row, Error>) throws -> ContactPerson {
         let columns = try row.get().columns
         let personNumber = Int64(try columns[0].int())
