@@ -17,6 +17,12 @@
 		04B474F228FDE40D001BC58C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B474F128FDE40D001BC58C /* AppState.swift */; };
 		420B3D992912FBA500B75FEB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420B3D982912FBA500B75FEB /* ProfileView.swift */; };
 		420B3D9B2912FEE300B75FEB /* ProfileView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420B3D9A2912FEE300B75FEB /* ProfileView-ViewModel.swift */; };
+		4227DE7C291902B300D5B57C /* PrintersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4227DE7B291902B300D5B57C /* PrintersView.swift */; };
+		4227DE812919068300D5B57C /* PrintersView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4227DE802919068300D5B57C /* PrintersView-ViewModel.swift */; };
+		4227DE83291906D600D5B57C /* Printer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4227DE82291906D600D5B57C /* Printer.swift */; };
+		4227DE8729190E6A00D5B57C /* PrinterDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4227DE8629190E6A00D5B57C /* PrinterDetailsView.swift */; };
+		4227DE89291955CC00D5B57C /* AddPrinterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4227DE88291955CC00D5B57C /* AddPrinterView.swift */; };
+		4227DE8B29195D1B00D5B57C /* AddPrinterView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4227DE8A29195D1B00D5B57C /* AddPrinterView-ViewModel.swift */; };
 		42364D272912AC9D00062374 /* AddEmployeeView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42364D262912AC9D00062374 /* AddEmployeeView-ViewModel.swift */; };
 		42364D292912BD6D00062374 /* LoginView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42364D282912BD6D00062374 /* LoginView-ViewModel.swift */; };
 		42364D2B2912C0FE00062374 /* MainView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42364D2A2912C0FE00062374 /* MainView-ViewModel.swift */; };
@@ -61,6 +67,12 @@
 		04B474F128FDE40D001BC58C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		420B3D982912FBA500B75FEB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		420B3D9A2912FEE300B75FEB /* ProfileView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileView-ViewModel.swift"; sourceTree = "<group>"; };
+		4227DE7B291902B300D5B57C /* PrintersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintersView.swift; sourceTree = "<group>"; };
+		4227DE802919068300D5B57C /* PrintersView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrintersView-ViewModel.swift"; sourceTree = "<group>"; };
+		4227DE82291906D600D5B57C /* Printer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Printer.swift; sourceTree = "<group>"; };
+		4227DE8629190E6A00D5B57C /* PrinterDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrinterDetailsView.swift; sourceTree = "<group>"; };
+		4227DE88291955CC00D5B57C /* AddPrinterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPrinterView.swift; sourceTree = "<group>"; };
+		4227DE8A29195D1B00D5B57C /* AddPrinterView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddPrinterView-ViewModel.swift"; sourceTree = "<group>"; };
 		42364D262912AC9D00062374 /* AddEmployeeView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddEmployeeView-ViewModel.swift"; sourceTree = "<group>"; };
 		42364D282912BD6D00062374 /* LoginView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginView-ViewModel.swift"; sourceTree = "<group>"; };
 		42364D2A2912C0FE00062374 /* MainView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainView-ViewModel.swift"; sourceTree = "<group>"; };
@@ -145,14 +157,34 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		4227DE7A2919025100D5B57C /* printers-views */ = {
+			isa = PBXGroup;
+			children = (
+				4227DE7B291902B300D5B57C /* PrintersView.swift */,
+				4227DE8629190E6A00D5B57C /* PrinterDetailsView.swift */,
+				4227DE88291955CC00D5B57C /* AddPrinterView.swift */,
+			);
+			path = "printers-views";
+			sourceTree = "<group>";
+		};
+		4227DE7D2919064400D5B57C /* printers-view-models */ = {
+			isa = PBXGroup;
+			children = (
+				4227DE802919068300D5B57C /* PrintersView-ViewModel.swift */,
+				4227DE8A29195D1B00D5B57C /* AddPrinterView-ViewModel.swift */,
+			);
+			path = "printers-view-models";
+			sourceTree = "<group>";
+		};
 		42364D222912A99F00062374 /* views */ = {
 			isa = PBXGroup;
 			children = (
 				42C0880A2915315C000852B3 /* work-views */,
 				42C0880B29153198000852B3 /* employees-views */,
 				42C0880C291531DF000852B3 /* clients-views */,
-				0455162928FD993C0006F862 /* LoginView.swift */,
+				4227DE7A2919025100D5B57C /* printers-views */,
 				0430FA7C29046763001E4CDD /* MainView.swift */,
+				0455162928FD993C0006F862 /* LoginView.swift */,
 				420B3D982912FBA500B75FEB /* ProfileView.swift */,
 			);
 			path = views;
@@ -164,6 +196,7 @@
 				42C0880729153095000852B3 /* work-view-models */,
 				42C0880929153137000852B3 /* employees-view-models */,
 				42C08808291530EB000852B3 /* clients-view-models */,
+				4227DE7D2919064400D5B57C /* printers-view-models */,
 				42364D2A2912C0FE00062374 /* MainView-ViewModel.swift */,
 				42364D282912BD6D00062374 /* LoginView-ViewModel.swift */,
 				420B3D9A2912FEE300B75FEB /* ProfileView-ViewModel.swift */,
@@ -190,6 +223,7 @@
 				42C0881329153EB0000852B3 /* ContactPerson.swift */,
 				42C0881529154329000852B3 /* Organization.swift */,
 				428591852916638000495E3B /* RowDerivable.swift */,
+				4227DE82291906D600D5B57C /* Printer.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -339,8 +373,10 @@
 				42C088002915263A000852B3 /* WorkView.swift in Sources */,
 				425BD49E2917A61D00B90C42 /* AddPersonView-ViewModel.swift in Sources */,
 				42B319552911A92D00C57ABB /* EmployeesView-ViewModel.swift in Sources */,
+				4227DE8B29195D1B00D5B57C /* AddPrinterView-ViewModel.swift in Sources */,
 				42C087FC29152235000852B3 /* AddContractView.swift in Sources */,
 				42C088062915307D000852B3 /* ClientsView-ViewModel.swift in Sources */,
+				4227DE8729190E6A00D5B57C /* PrinterDetailsView.swift in Sources */,
 				0430FA7D29046763001E4CDD /* MainView.swift in Sources */,
 				42C0880429152FE0000852B3 /* AddContractView-ViewModel.swift in Sources */,
 				42B2B7552916B2EF004DD799 /* AddClientView.swift in Sources */,
@@ -359,6 +395,7 @@
 				42C087FE2915247F000852B3 /* ClientsView.swift in Sources */,
 				428228C3290E7117004FE0BC /* EmployeeDetailsView.swift in Sources */,
 				4287CA9529146288000C8EA1 /* AddTaskView-ViewModel.swift in Sources */,
+				4227DE7C291902B300D5B57C /* PrintersView.swift in Sources */,
 				0455161928FD972D0006F862 /* printers_company_crmApp.swift in Sources */,
 				425BD4A22918153F00B90C42 /* ContractDetailsView.swift in Sources */,
 				42C0881429153EB0000852B3 /* ContactPerson.swift in Sources */,
@@ -366,10 +403,13 @@
 				42B2B75B2916FF2D004DD799 /* ClientDetailsView.swift in Sources */,
 				42B2B75F2917144E004DD799 /* AddPersonView.swift in Sources */,
 				42AE2373290DD5CD00CF49FE /* AddEmployeeView.swift in Sources */,
+				4227DE89291955CC00D5B57C /* AddPrinterView.swift in Sources */,
+				4227DE812919068300D5B57C /* PrintersView-ViewModel.swift in Sources */,
 				4287CA932914626B000C8EA1 /* Task.swift in Sources */,
 				42B2B7592916B31C004DD799 /* AddClientView-ViewModel.swift in Sources */,
 				42C087F6291514A4000852B3 /* Contract.swift in Sources */,
 				42C0881629154329000852B3 /* Organization.swift in Sources */,
+				4227DE83291906D600D5B57C /* Printer.swift in Sources */,
 				42B319572911BE4300C57ABB /* AddTaskView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

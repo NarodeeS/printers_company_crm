@@ -19,9 +19,10 @@ struct ProfileView: View {
                         if user.role == .admin {
                             Text("Login: " + user.username)
                                 .font(.title2)
-                                .padding(.bottom)
+                                .padding()
                             Text("Role: " + user.role.rawValue)
                                 .font(.title2)
+                                .padding()
                         } else {
                             if let user = viewModel.employeeInfo {
                                 HStack {
@@ -77,6 +78,7 @@ struct ProfileView: View {
             .onAppear {
                 if let user = AppState.user {
                     viewModel.user = user
+                    mainViewViewModel.setUser()
                     
                     if let employee = try? DatabaseAPI.getUserByLogin(login: viewModel.user!.username) {
                         viewModel.employeeInfo = employee

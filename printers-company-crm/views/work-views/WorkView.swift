@@ -9,7 +9,6 @@ import SwiftUI
 
 struct WorkView: View {
     @StateObject private var viewModel = ViewModel()
-    private var priorityCodes = [Int: String]()
     
     var body: some View {
         NavigationView {

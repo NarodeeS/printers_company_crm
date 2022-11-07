@@ -82,7 +82,6 @@ CREATE TABLE tasks (
 
 CREATE TABLE printers (
     printer_number BIGSERIAL PRIMARY KEY,
-    printer_serial_number VARCHAR(50) UNIQUE,
     manufacturer VARCHAR(50) NOT NULL,
     printer_name VARCHAR(50) NOT NULL,
     paper_weight SMALLINT NOT NULL,
@@ -98,6 +97,7 @@ CREATE TABLE printers (
 CREATE TABLE participating_printers (
     printer_number BIGINT NOT NULL REFERENCES printers(printer_number),
     task_number BIGINT NOT NULL REFERENCES tasks(task_number),
+    amount INTEGER NOT NULL,
     PRIMARY KEY(printer_number, task_number)
 );
 
@@ -108,7 +108,7 @@ INSERT INTO paper_format_classifier (paper_format_name)
 VALUES ('A0'), ('A1'), ('A2'), ('A3'), ('A4'), ('A5');
 
 INSERT INTO print_technology_classifier(print_technology_name)
-VALUES ('Лазерная'), ('Светодиодная'), ('Струйная');
+VALUES ('Лазерный'), ('Светодиодный'), ('Струйный');
 
 INSERT INTO tasks_type_classifier (task_type_name)
 VALUES 
@@ -311,31 +311,31 @@ AFTER DELETE ON employees
 FOR EACH ROW
 EXECUTE FUNCTION delete_employee_role();
 
-INSERT INTO printers(printer_serial_number, manufacturer, 
+INSERT INTO printers(manufacturer, 
                      printer_name, paper_weight, 
                      colors_number, resolution, 
                      print_speed, cartridge_count, 
                      tray_capacity, paper_format_code, 
                      print_technology_code) 
-VALUES('1234567890', 'HP', 'LaserJet Pro', 64, 
+VALUES('HP', 'LaserJet Pro', 64, 
        2, '5760x1440', 15, 1, 100, 5, 1);
 
-INSERT INTO printers(printer_serial_number, manufacturer, 
+INSERT INTO printers(manufacturer, 
                      printer_name, paper_weight, 
                      colors_number, resolution, 
                      print_speed, cartridge_count, 
                      tray_capacity, paper_format_code, 
                      print_technology_code) 
-VALUES('1234567899', 'Pantum', 'P2500W', 64, 
+VALUES('Pantum', 'P2500W', 64, 
        2, '1200x1200', 22, 1, 100, 5, 1);
 
-INSERT INTO printers(printer_serial_number, manufacturer, 
+INSERT INTO printers(manufacturer, 
                      printer_name, paper_weight, 
                      colors_number, resolution, 
                      print_speed, cartridge_count, 
                      tray_capacity, paper_format_code, 
                      print_technology_code) 
-VALUES('1234567894', 'EPSON', 'L805', 300, 
+VALUES('EPSON', 'L805', 300, 
        6, '5760x1440', 15, 6, 120, 5, 3);
 
 -- Индексы

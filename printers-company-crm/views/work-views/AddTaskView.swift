@@ -54,7 +54,7 @@ struct AddTaskView: View {
                         Picker("Contract", selection: $viewModel.contractNumber) {
                             ForEach(Array(viewModel.contractsCodes.keys), id: \.self) { contractCode in
                                 if let contract = viewModel.contractsCodes[contractCode] {
-                                    Text("Contract " + String(contract.id))
+                                    Text("Contract №" + String(contract.id))
                                 }
                             }
                         }

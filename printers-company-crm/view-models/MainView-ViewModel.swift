@@ -11,5 +11,10 @@ extension MainView {
     @MainActor class ViewModel: ObservableObject {
         @Published var tabSelection = 1
         @Published var showingLoginSheet = false
+        @Published var user: User?
+        
+        func setUser() {
+            user = AppState.user
+        }
     }
 }
