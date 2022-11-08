@@ -12,6 +12,7 @@ extension EmployeesView {
         @Published private(set) var employee_list = [Employee]()
         @Published var user: User? = nil
         @Published var showingCreateUserView = false
+        @Published var isLoading = false
         
         func loadEmployees() {
             employee_list = DatabaseAPI.getDataObjects(statementText: Employee.getAllStatementText,

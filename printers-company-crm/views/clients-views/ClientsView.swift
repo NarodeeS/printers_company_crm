@@ -12,18 +12,28 @@ struct ClientsView: View {
         
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.organizations) { organization in
-                    NavigationLink {
-                        ClientDetailsView(organization: organization)
-                    } label: {
-                        VStack(alignment: .leading) {
-                            Text(organization.organizationName)
-                                .font(.headline)
-                            Text(organization.organizationEmail)
-                                .font(.subheadline)
+            ZStack {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .zIndex(1)
+                }
+                List {
+                    ForEach(viewModel.organizations) { organization in
+                        NavigationLink {
+                            ClientDetailsView(organization: organization)
+                        } label: {
+                            VStack(alignment: .leading) {
+                                Text(organization.organizationName)
+                                    .font(.headline)
+                                Text(organization.organizationEmail)
+                                    .font(.subheadline)
+                            }
                         }
                     }
+                }
+                .zIndex(0)
+                .refreshable {
+                    viewModel.loadOrganizations()
                 }
             }
             .navigationTitle("Clients")
@@ -43,13 +53,17 @@ struct ClientsView: View {
             .sheet(isPresented: $viewModel.showAddView) {
                 AddClientView(clientsViewViewModel: viewModel)
             }
-            .refreshable {
-                viewModel.loadOrganizations()
-            }
-            .onAppear {
-                viewModel.loadOrganizations()
-                if let user = AppState.user {
-                    viewModel.user = user
+            .task {
+                let dispatchQueue = DispatchQueue(label: "Loading resources", qos: .background)
+                dispatchQueue.async {
+                    DispatchQueue.main.async {
+                        viewModel.isLoading = true
+                        viewModel.loadOrganizations()
+                        if let user = AppState.user {
+                            viewModel.user = user
+                        }
+                        viewModel.isLoading = false
+                    }
                 }
             }
         }

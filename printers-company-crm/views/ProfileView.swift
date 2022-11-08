@@ -75,13 +75,20 @@ struct ProfileView: View {
                     }
                 }
             }
-            .onAppear {
-                if let user = AppState.user {
-                    viewModel.user = user
-                    mainViewViewModel.setUser()
-                    
-                    if let employee = try? DatabaseAPI.getUserByLogin(login: viewModel.user!.username) {
-                        viewModel.employeeInfo = employee
+            .task {
+                let dispatchQueue = DispatchQueue(label: "LoadingResources", qos: .background)
+                dispatchQueue.async {
+                    DispatchQueue.main.async {
+                        viewModel.isLoading = true
+                        if let user = AppState.user {
+                            viewModel.user = user
+                            mainViewViewModel.setUser()
+                            
+                            if let employee = try? DatabaseAPI.getUserByLogin(login: viewModel.user!.username) {
+                                viewModel.employeeInfo = employee
+                            }
+                        }
+                        viewModel.isLoading = false
                     }
                 }
             }

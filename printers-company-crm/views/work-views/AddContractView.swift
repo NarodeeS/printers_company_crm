@@ -14,45 +14,59 @@ struct AddContractView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                Section("Contract details") {
-                    TextEditor(text: $viewModel.contractDetails)
+            ZStack {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .zIndex(1)
                 }
-                Section {
-                    Picker("Organization", selection: $viewModel.organizationNumber) {
-                        ForEach(Array(viewModel.organizationCodes.keys), id: \.self) { organizationNumber in
-                            if let organization = viewModel.organizationCodes[organizationNumber] {
-                                Text(organization.organizationName + " (\(organization.organizationEmail))")
+                Form {
+                    Section("Contract details") {
+                        TextEditor(text: $viewModel.contractDetails)
+                    }
+                    Section {
+                        Picker("Organization", selection: $viewModel.organizationNumber) {
+                            ForEach(Array(viewModel.organizationCodes.keys), id: \.self) { organizationNumber in
+                                if let organization = viewModel.organizationCodes[organizationNumber] {
+                                    Text(organization.organizationName + " (\(organization.organizationEmail))")
+                                }
                             }
                         }
-                    }
-                    Button("Submit") {
-                        let creationStatement = Contract
-                            .createCreationStatement(contractDetails: viewModel.contractDetails,
-                                                     organizationNumber: viewModel.organizationNumber)
-                        do {
-                            try DatabaseAPI.executeStatement(statementText: creationStatement)
-                            workViewViewModel.loadContracts()
-                            viewModel.alertTitle = "Success"
-                            viewModel.alertMessage = "Contract created"
-                        } catch {
-                            workViewViewModel.loadContracts()
-                            viewModel.alertTitle = "Error"
-                            viewModel.alertMessage = error.localizedDescription
+                        Button("Submit") {
+                            let creationStatement = Contract
+                                .createCreationStatement(contractDetails: viewModel.contractDetails,
+                                                         organizationNumber: viewModel.organizationNumber)
+                            do {
+                                try DatabaseAPI.executeStatement(statementText: creationStatement)
+                                workViewViewModel.loadContracts()
+                                viewModel.alertTitle = "Success"
+                                viewModel.alertMessage = "Contract created"
+                            } catch {
+                                workViewViewModel.loadContracts()
+                                viewModel.alertTitle = "Error"
+                                viewModel.alertMessage = error.localizedDescription
+                            }
+                            viewModel.showAlert = true
                         }
-                        viewModel.showAlert = true
                     }
                 }
+                .zIndex(0)
             }
             .navigationTitle("New contract")
-            .onAppear {
-                viewModel.loadOrganizations()
-                if viewModel.organizationCodes.count == 0 {
-                    viewModel.alertTitle = "Error"
-                    viewModel.alertMessage = "To create contract you need to have at least one client"
-                    viewModel.showAlert = true
-                } else {
-                    viewModel.organizationNumber = viewModel.organizationCodes.keys.first!
+            .task {
+                let dispatchQueue = DispatchQueue(label: "Loading resources", qos: .background)
+                dispatchQueue.async {
+                    DispatchQueue.main.async {
+                        viewModel.isLoading = true
+                        viewModel.loadOrganizations()
+                        if viewModel.organizationCodes.count == 0 {
+                            viewModel.alertTitle = "Error"
+                            viewModel.alertMessage = "To create contract you need to have at least one client"
+                            viewModel.showAlert = true
+                        } else {
+                            viewModel.organizationNumber = viewModel.organizationCodes.keys.first!
+                        }
+                        viewModel.isLoading = false
+                    }
                 }
             }
             .alert(viewModel.alertTitle, isPresented: $viewModel.showAlert) {

@@ -22,6 +22,7 @@ extension WorkView {
         @Published var organizations = [Organization]()
         @Published var tasksTypes = [Int: String]()
         @Published var priorityCodes = [Int: String]()
+        @Published var isLoading = false
         
         func getOrganizationById(id: Int) -> Organization? {
             if let organizationIndex = organizations

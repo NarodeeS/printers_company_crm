@@ -15,6 +15,8 @@
 		0455162A28FD993C0006F862 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0455162928FD993C0006F862 /* LoginView.swift */; };
 		04B474F028FDE07D001BC58C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B474EF28FDE07D001BC58C /* User.swift */; };
 		04B474F228FDE40D001BC58C /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B474F128FDE40D001BC58C /* AppState.swift */; };
+		420AB620291ABA9C00869FB6 /* AddParticipatingPrinterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420AB61F291ABA9C00869FB6 /* AddParticipatingPrinterView.swift */; };
+		420AB622291ABAC700869FB6 /* AddParticipatingPrinterView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420AB621291ABAC700869FB6 /* AddParticipatingPrinterView-ViewModel.swift */; };
 		420B3D992912FBA500B75FEB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420B3D982912FBA500B75FEB /* ProfileView.swift */; };
 		420B3D9B2912FEE300B75FEB /* ProfileView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420B3D9A2912FEE300B75FEB /* ProfileView-ViewModel.swift */; };
 		4227DE7C291902B300D5B57C /* PrintersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4227DE7B291902B300D5B57C /* PrintersView.swift */; };
@@ -65,6 +67,8 @@
 		0455162928FD993C0006F862 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		04B474EF28FDE07D001BC58C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		04B474F128FDE40D001BC58C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		420AB61F291ABA9C00869FB6 /* AddParticipatingPrinterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddParticipatingPrinterView.swift; sourceTree = "<group>"; };
+		420AB621291ABAC700869FB6 /* AddParticipatingPrinterView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddParticipatingPrinterView-ViewModel.swift"; sourceTree = "<group>"; };
 		420B3D982912FBA500B75FEB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		420B3D9A2912FEE300B75FEB /* ProfileView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileView-ViewModel.swift"; sourceTree = "<group>"; };
 		4227DE7B291902B300D5B57C /* PrintersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintersView.swift; sourceTree = "<group>"; };
@@ -234,6 +238,7 @@
 				42C0880129152710000852B3 /* WorkView-ViewModel.swift */,
 				4287CA9429146288000C8EA1 /* AddTaskView-ViewModel.swift */,
 				42C0880329152FE0000852B3 /* AddContractView-ViewModel.swift */,
+				420AB621291ABAC700869FB6 /* AddParticipatingPrinterView-ViewModel.swift */,
 			);
 			path = "work-view-models";
 			sourceTree = "<group>";
@@ -265,6 +270,7 @@
 				42B319562911BE4300C57ABB /* AddTaskView.swift */,
 				42C087FB29152235000852B3 /* AddContractView.swift */,
 				425BD4A12918153F00B90C42 /* ContractDetailsView.swift */,
+				420AB61F291ABA9C00869FB6 /* AddParticipatingPrinterView.swift */,
 			);
 			path = "work-views";
 			sourceTree = "<group>";
@@ -368,6 +374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0455162A28FD993C0006F862 /* LoginView.swift in Sources */,
+				420AB620291ABA9C00869FB6 /* AddParticipatingPrinterView.swift in Sources */,
 				42364D2B2912C0FE00062374 /* MainView-ViewModel.swift in Sources */,
 				42364D292912BD6D00062374 /* LoginView-ViewModel.swift in Sources */,
 				42C088002915263A000852B3 /* WorkView.swift in Sources */,
@@ -402,6 +409,7 @@
 				428228C7290E71C5004FE0BC /* EmployeesView.swift in Sources */,
 				42B2B75B2916FF2D004DD799 /* ClientDetailsView.swift in Sources */,
 				42B2B75F2917144E004DD799 /* AddPersonView.swift in Sources */,
+				420AB622291ABAC700869FB6 /* AddParticipatingPrinterView-ViewModel.swift in Sources */,
 				42AE2373290DD5CD00CF49FE /* AddEmployeeView.swift in Sources */,
 				4227DE89291955CC00D5B57C /* AddPrinterView.swift in Sources */,
 				4227DE812919068300D5B57C /* PrintersView-ViewModel.swift in Sources */,

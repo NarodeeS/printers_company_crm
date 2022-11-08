@@ -16,79 +16,115 @@ struct AddTaskView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                Section("Task description") {
-                    Picker("Task type", selection: $viewModel.taskType) {
-                        ForEach(Array(tasksTypes.keys), id: \.self) {
-                            if let value = tasksTypes[$0] {
-                                Text(value)
-                            }
-                        }
-                    }
-                    Picker("Priority", selection: $viewModel.priorityCode) {
-                        ForEach(Array(priorityCodes.keys), id: \.self) {
-                            if let value = priorityCodes[$0] {
-                                Text(value)
-                            }
-                        }
-                    }
+            ZStack {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .zIndex(1)
                 }
-                Section("Task details") {
-                    TextEditor(text: $viewModel.taskDetails)
-                    Toggle(isOn: $viewModel.setDate.animation()) {
-                        Text("Enable date")
-                    }
-                    if viewModel.setDate {
-                        DatePicker("Completion date",
-                                   selection: $viewModel.plannedCompletionDate,
-                                   displayedComponents: [.date])
-                    }
-                    Picker("Contact person", selection: $viewModel.personNumber) {
-                        ForEach(Array(viewModel.personsCodes.keys), id: \.self) { personCode in
-                            if let person = viewModel.personsCodes[personCode] {
-                                Text(person.personName + " (id: \(person.id))")
+                Form {
+                    Section("Task description") {
+                        Picker("Task type", selection: $viewModel.taskType) {
+                            ForEach(Array(tasksTypes.keys), id: \.self) {
+                                if let value = tasksTypes[$0] {
+                                    Text(value)
+                                }
                             }
                         }
-                    }
-                    if viewModel.enableContractSetting {
-                        Picker("Contract", selection: $viewModel.contractNumber) {
-                            ForEach(Array(viewModel.contractsCodes.keys), id: \.self) { contractCode in
-                                if let contract = viewModel.contractsCodes[contractCode] {
-                                    Text("Contract №" + String(contract.id))
+                        Picker("Priority", selection: $viewModel.priorityCode) {
+                            ForEach(Array(priorityCodes.keys), id: \.self) {
+                                if let value = priorityCodes[$0] {
+                                    Text(value)
                                 }
                             }
                         }
                     }
+                    Section("Task details") {
+                        TextEditor(text: $viewModel.taskDetails)
+                        Toggle(isOn: $viewModel.setDate.animation()) {
+                            Text("Enable date")
+                        }
+                        if viewModel.setDate {
+                            DatePicker("Completion date",
+                                       selection: $viewModel.plannedCompletionDate,
+                                       displayedComponents: [.date])
+                        }
+                        Picker("Contact person", selection: $viewModel.personNumber) {
+                            ForEach(Array(viewModel.personsCodes.keys), id: \.self) { personCode in
+                                if let person = viewModel.personsCodes[personCode] {
+                                    Text(person.personName + " (id: \(person.id))")
+                                }
+                            }
+                        }
+                        if viewModel.enableContractSetting {
+                            Toggle("Part of contract?", isOn: $viewModel.partOfContract.animation())
+                            if viewModel.partOfContract {
+                                Picker("Contract", selection: $viewModel.contractNumber) {
+                                    ForEach(Array(viewModel.contractsCodes.keys), id: \.self) { contractCode in
+                                        if let contract = viewModel.contractsCodes[contractCode] {
+                                            Text("Contract №" + String(contract.id))
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if viewModel.partOfContract {
+                        Section("Participating printers") {
+                            List {
+                                
+                            }
+                        }
+                    }
+                    Button("Submit") {
+                        // Create task
+                    }
                 }
-                Button("Submit") {
-                    // Create task
-                }
+                .zIndex(0)
             }
             .navigationTitle("New task")
             .navigationBarTitleDisplayMode(.large)
-            .alert(viewModel.alertTitle, isPresented: $viewModel.showAlert) {
+            .alert(viewModel.alertTitle, isPresented: $viewModel.showFinalAlert) {
                 Button("OK") {
                     dismiss()
                 }
             } message: {
                 Text(viewModel.alertMessage)
             }
-            .onAppear {
-                if let user = AppState.user {
-                    viewModel.user = user
+            .task {
+                let dispatchQueue = DispatchQueue(label: "Loading resources", qos: .background)
+                dispatchQueue.async {
+                    DispatchQueue.main.async {
+                        viewModel.isLoading = true
+                        if let user = AppState.user {
+                            viewModel.user = user
+                        }
+                        viewModel.loadPersons()
+                        viewModel.loadContracts()
+                        if viewModel.personsCodes.count == 0 {
+                            viewModel.alertTitle = "Error"
+                            viewModel.alertMessage = "You need to add at least one contact person"
+                            viewModel.showFinalAlert = true
+                        }
+                        viewModel.personNumber = viewModel.personsCodes.first!.key
+                        if viewModel.contractsCodes.count > 0 {
+                            viewModel.enableContractSetting = true
+                            viewModel.contractNumber = viewModel.contractsCodes.first!.key
+                        }
+                        viewModel.isLoading = false
+                    }
                 }
-                viewModel.loadPersons()
-                viewModel.loadContracts()
-                if viewModel.personsCodes.count == 0 {
-                    viewModel.alertTitle = "Error"
-                    viewModel.alertMessage = "You need to add at least one contact person"
-                    viewModel.showAlert = true
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    if viewModel.partOfContract {
+                        Button("Add printer") {
+                            viewModel.showAddPrinterSheet = true
+                        }
+                    }
                 }
-                viewModel.personNumber = viewModel.personsCodes.first!.key
-                if viewModel.contractsCodes.count > 0 {
-                    viewModel.enableContractSetting = true
-                    viewModel.contractNumber = viewModel.contractsCodes.first!.key
-                }
+            }
+            .sheet(isPresented: $viewModel.showAddPrinterSheet) {
+                
             }
         }
     }

@@ -13,6 +13,7 @@ extension ClientDetailsView {
         @Published var organization: Organization? = nil
         @Published var showAddPersonView = false
         @Published var user: User? = nil
+        @Published var isLoading = false
         
         func loadContactPersons() {
             if let organization = organization {

@@ -12,8 +12,8 @@ extension PrintersView {
         @Published var printers = [Printer]()
         @Published var paperFormatCodes = [Int: String]()
         @Published var printTechnologyCodes = [Int: String]()
+        @Published var isLoading = true
         @Published var showAddingSheet = false
-        
         
         func loadPrinters() {
             printers = DatabaseAPI
@@ -44,7 +44,6 @@ extension PrintersView {
             }
             return printtechnology
         }
-        
         
         func loadPrintTechnologyCodes() {
             printTechnologyCodes = DatabaseAPI.getClassifierValues(tableName: "print_technology_classifier")

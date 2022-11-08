@@ -12,6 +12,7 @@ extension ClientsView {
         @Published var showAddView = false
         @Published var organizations = [Organization]()
         @Published var user: User? = nil
+        @Published var isLoading = false
         
         func loadOrganizations() {
             organizations = DatabaseAPI.getDataObjects(statementText: Organization.getAllStatementText,

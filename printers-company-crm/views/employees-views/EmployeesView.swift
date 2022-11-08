@@ -12,22 +12,32 @@ struct EmployeesView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.employee_list) { employee in
-                    NavigationLink {
-                        EmployeeDetailsView(employee: employee)
-                    } label: {
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text(employee.name)
-                                Text(employee.surname)
-                                Spacer()
+            ZStack {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .zIndex(1)
+                }
+                List {
+                    ForEach(viewModel.employee_list) { employee in
+                        NavigationLink {
+                            EmployeeDetailsView(employee: employee)
+                        } label: {
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text(employee.name)
+                                    Text(employee.surname)
+                                    Spacer()
+                                }
+                                .font(.headline)
+                                Text(employee.role.rawValue)
+                                    .font(.subheadline)
                             }
-                            .font(.headline)
-                            Text(employee.role.rawValue)
-                                .font(.subheadline)
                         }
                     }
+                }
+                .zIndex(0)
+                .refreshable {
+                    viewModel.loadEmployees()
                 }
             }
             .navigationTitle("Users")
@@ -47,12 +57,16 @@ struct EmployeesView: View {
             .sheet(isPresented: $viewModel.showingCreateUserView) {
                 AddEmployeeView(viewModel: viewModel)
             }
-            .refreshable {
-                viewModel.loadEmployees()
-            }
-            .onAppear {
-                viewModel.loadEmployees()
-                viewModel.user = AppState.user
+            .task {
+                let dispatchQueue = DispatchQueue(label: "Loading resources", qos: .background)
+                dispatchQueue.async {
+                    DispatchQueue.main.async {
+                        viewModel.isLoading = true
+                        viewModel.loadEmployees()
+                        viewModel.user = AppState.user
+                        viewModel.isLoading = false
+                    }
+                }
             }
         }
     }

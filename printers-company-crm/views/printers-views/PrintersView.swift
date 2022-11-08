@@ -12,36 +12,47 @@ struct PrintersView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.printers) { printer in
-                    NavigationLink {
-                        if let paperFormat = viewModel.getPaperFormatById(id: printer.paperFormatCode),
-                           let printTechnology = viewModel.getPrintTechnologyById(id: printer.printTechnologyCode) {
-                            PrinterDetailsView(selectedPrinter: printer,
-                                               paperFormat: paperFormat,
-                                               printTechnology: printTechnology)
-                        }
-                    } label: {
-                        VStack(alignment: .leading) {
-                            Text(printer.name)
-                                .font(.headline)
-                            Text(printer.manufacturer)
-                                .font(.subheadline)
+            ZStack {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .zIndex(1)
+                }
+                List {
+                    ForEach(viewModel.printers) { printer in
+                        NavigationLink {
+                            if let paperFormat = viewModel.getPaperFormatById(id: printer.paperFormatCode),
+                               let printTechnology = viewModel.getPrintTechnologyById(id: printer.printTechnologyCode) {
+                                PrinterDetailsView(selectedPrinter: printer,
+                                                   paperFormat: paperFormat,
+                                                   printTechnology: printTechnology)
+                            }
+                        } label: {
+                            VStack(alignment: .leading) {
+                                Text(printer.name)
+                                    .font(.headline)
+                                Text(printer.manufacturer)
+                                    .font(.subheadline)
+                            }
                         }
                     }
                 }
-            }
-            .refreshable {
-                viewModel.loadPrinters()
+                .zIndex(0)
+                .refreshable {
+                    viewModel.loadPrinters()
+                }
             }
             .navigationTitle("Printers")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        viewModel.showAddingSheet = true
-                    } label: {
-                        Image(systemName: "plus")
+                    if let user = AppState.user {
+                        if user.role == .admin {
+                            Button {
+                                viewModel.showAddingSheet = true
+                            } label: {
+                                Image(systemName: "plus")
+                            }
+                        }
                     }
                 }
             }
@@ -50,10 +61,17 @@ struct PrintersView: View {
                                paperFormatCodes: viewModel.paperFormatCodes,
                                printTechnologyCodes: viewModel.printTechnologyCodes)
             }
-            .onAppear {
-                viewModel.loadPrinters()
-                viewModel.loadPaperFormatCodes()
-                viewModel.loadPrintTechnologyCodes()
+            .task {
+                let dispatchQueue = DispatchQueue(label: "LoadingResources", qos: .background)
+                dispatchQueue.async {
+                    DispatchQueue.main.async {
+                        viewModel.isLoading = true
+                        viewModel.loadPrinters()
+                        viewModel.loadPaperFormatCodes()
+                        viewModel.loadPrintTechnologyCodes()
+                        viewModel.isLoading = false
+                    }
+                }
             }
         }
     }

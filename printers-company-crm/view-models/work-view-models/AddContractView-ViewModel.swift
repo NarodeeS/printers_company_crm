@@ -15,6 +15,7 @@ extension AddContractView {
         @Published var alertTitle = ""
         @Published var alertMessage = ""
         @Published var organizationCodes = [Int: Organization]()
+        @Published var isLoading = false
         
         func loadOrganizations() {
             let organizations = DatabaseAPI

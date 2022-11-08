@@ -11,5 +11,6 @@ extension ProfileView {
     @MainActor class ViewModel: ObservableObject {
         @Published var user: User? = nil
         @Published var employeeInfo: Employee? = nil
+        @Published var isLoading = false
     }
 }

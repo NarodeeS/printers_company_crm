@@ -35,16 +35,11 @@ struct MainView: View {
                     Label("Users", systemImage: "person.3")
                 }
                 .tag(4)
-            
-            if let user = viewModel.user {
-                if user.role == .admin {
-                    PrintersView()
-                        .tabItem {
-                            Label("Printers", systemImage: "printer.fill")
-                        }
-                        .tag(5)
+            PrintersView()
+                .tabItem {
+                    Label("Printers", systemImage: "printer.fill")
                 }
-            }
+                .tag(5)
         }
         .sheet(isPresented: $viewModel.showingLoginSheet) {
             LoginView(tabSelection: $viewModel.tabSelection)

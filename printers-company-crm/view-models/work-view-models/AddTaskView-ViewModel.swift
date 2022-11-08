@@ -12,7 +12,7 @@ extension AddTaskView {
         @Published var user: User? = nil
         @Published var personsCodes = [Int64: ContactPerson]()
         @Published var contractsCodes = [Int: Contract]()
-        @Published var showAlert = false
+        @Published var showFinalAlert = false
         @Published var alertTitle = ""
         @Published var alertMessage = ""
         @Published var taskType = 1
@@ -21,8 +21,11 @@ extension AddTaskView {
         @Published var plannedCompletionDate = Date()
         @Published var personNumber: Int64 = 1
         @Published var contractNumber = 1
+        @Published var partOfContract = false
         @Published var enableContractSetting = false
         @Published var setDate = false
+        @Published var showAddPrinterSheet = false
+        @Published var isLoading = false
         
         func loadPersons() {
             let persons = DatabaseAPI.getDataObjects(statementText: ContactPerson.getAllStatementText,
