@@ -9,6 +9,11 @@ import SwiftUI
 
 struct WorkView: View {
     @StateObject private var viewModel = ViewModel()
+    var dateFormatter: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter
+    }
     
     var body: some View {
         NavigationView {
@@ -30,19 +35,19 @@ struct WorkView: View {
                         List {
                             ForEach(viewModel.tasks) { task in
                                 NavigationLink {
-                                    
+                                    // task details
                                 } label: {
                                     VStack(alignment: .leading) {
                                         if let taskType = viewModel.tasksTypes[task.taskTypeCode],
                                            let priority = viewModel.priorityCodes[task.priorityCode] {
                                             HStack {
                                                 Text(taskType)
+                                                    .bold()
                                                 Spacer()
                                                 Text(priority)
                                             }
-                                            .bold()
                                             if let plannedDate = task.plannedVompletionDate {
-                                                Text(plannedDate.formatted())
+                                                Text(dateFormatter.string(from: plannedDate))
                                             }
                                         }
                                     }
@@ -104,7 +109,7 @@ struct WorkView: View {
             .sheet(isPresented: $viewModel.showAddView) {
                 switch viewModel.viewType {
                 case .tasks:
-                    AddTaskView()
+                    AddTaskView(workViewViewModel: viewModel)
                 case .contracts:
                     AddContractView(workViewViewModel: viewModel)
                 }

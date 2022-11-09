@@ -50,24 +50,34 @@ class Task: Identifiable, RowDerivable {
                                         personNumber: Int64, contractNumber: Int?,
                                         authorNumber: Int) -> String {
         let creationDate = Date()
+        let postgresCreationDate = creationDate.postgresDate(in: TimeZone.autoupdatingCurrent)
         let taskStatus = 0
         var plannedDateExists = false
         if let _ = plannedCompletionDate { plannedDateExists = true }
         var contractNumberExists = false
         if let _ = contractNumber {contractNumberExists = true}
-        return "INSERT INTO tasks(creation_date, \(plannedDateExists ? "planned_completion_date,": "") task_status, task_details, priority_code, task_type_code, person_number, \(contractNumberExists ? "contract_number,": "") author_number) VALUES ();"
+        return "INSERT INTO tasks(creation_date, \(plannedDateExists ? "planned_completion_date,": "") task_status, task_details, priority_code, task_type_code, person_number, \(contractNumberExists ? "contract_number,": "") author_number) VALUES (DATE '\(postgresCreationDate)', \(plannedDateExists ? "DATE '\(plannedCompletionDate!.postgresDate(in: TimeZone.autoupdatingCurrent))'," : "") \(taskStatus), '\(taskDetails)', \(priorityCode), \(taskTypeCode), \(personNumber), \(contractNumberExists ? "\(contractNumber!),": "") \(authorNumber)) RETURNING task_number;"
         
     }
     
     static func createFromRow(row: Result<Row, Error>) throws -> Task {
         let columns = try row.get().columns
         let id = Int64(try columns[0].int())
-        let postgresCreationDate = PostgresDate(try columns[1].string())
-        let creationDate = postgresCreationDate?.dateComponents.date
-        let postgresPlannedCompletionDate = PostgresDate(try columns[2].string())
-        let plannedCompletionDate = postgresPlannedCompletionDate?.dateComponents.date
-        let postgresActualCompletionDate = PostgresDate(try columns[3].string())
-        let actualCompletionDate = postgresActualCompletionDate?.dateComponents.date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let creationDate = dateFormatter.date(from: try columns[1].string())
+        
+        var plannedCompletionDate: Date? = nil
+        if let _ = columns[2].rawValue {
+            plannedCompletionDate = dateFormatter.date(from: try columns[2].string())
+        }
+        
+        var actualCompletionDate: Date? = nil
+        if let _ = columns[3].rawValue {
+            actualCompletionDate = dateFormatter.date(from: try columns[3].string())
+        }
+        
         let taskStatus = try columns[4].int()
         let taskDetails = try columns[5].string()
         let priorityCode = try columns[6].int()

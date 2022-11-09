@@ -66,6 +66,26 @@ class DatabaseAPI {
         try statement.execute()
     }
     
+    static func executeStatementWithResultId(statementText: String) throws -> Int64 {
+        let connection = try getConnection(username: AppState.user?.username ?? "Unknown",
+                                           userPassword: AppState.user?.password ?? "Unknown")
+        defer {
+            connection.close()
+        }
+        let statement = try connection.prepareStatement(text: statementText)
+        defer {
+            statement.close()
+        }
+        let cursor = try statement.execute()
+        defer {
+            cursor.close()
+        }
+        let row = try cursor.next()!.get()
+        let columns = row.columns
+        let id = Int64(try columns[0].int())
+        return id
+    }
+    
     static func getClassifierValues(tableName: String) -> [Int: String] {
         var values = [Int: String]()
         let statementText = "SELECT * FROM \(tableName);"

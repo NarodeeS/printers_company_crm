@@ -67,9 +67,9 @@ CREATE TABLE employees (
 
 CREATE TABLE tasks (
     task_number BIGSERIAL PRIMARY KEY,
-    creation_date TIMESTAMP DEFAULT NOW(),
-    planned_completion_date TIMESTAMP,
-    actual_completion_date TIMESTAMP,
+    creation_date DATE DEFAULT NOW(),
+    planned_completion_date DATE,
+    actual_completion_date DATE,
     task_status SMALLINT NOT NULL DEFAULT 0 CONSTRAINT status_check CHECK(task_status IN (0, 1)),
     task_details TEXT,
     priority_code SMALLINT NOT NULL REFERENCES priority_classifier(priority_code),
@@ -178,6 +178,11 @@ GRANT UPDATE(task_status, task_details,
              priority_code) ON tasks TO manager, worker;
 
 ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY allow_insert ON tasks 
+FOR INSERT 
+TO manager, worker 
+WITH CHECK(true);
 
 CREATE POLICY all_select ON tasks 
 FOR SELECT 

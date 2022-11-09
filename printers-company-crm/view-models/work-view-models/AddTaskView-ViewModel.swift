@@ -9,7 +9,7 @@ import Foundation
 
 extension AddTaskView {
     @MainActor class ViewModel: ObservableObject {
-        @Published var user: User? = nil
+        @Published var userId: Int? = nil
         @Published var personsCodes = [Int64: ContactPerson]()
         @Published var contractsCodes = [Int: Contract]()
         @Published var showFinalAlert = false
@@ -26,11 +26,11 @@ extension AddTaskView {
         @Published var setDate = false
         @Published var showAddPrinterSheet = false
         @Published var isLoading = false
+        @Published var participationPrinters = [Printer: Int]()
         
         func loadPersons() {
             let persons = DatabaseAPI.getDataObjects(statementText: ContactPerson.getAllStatementText,
                                                      ofType: ContactPerson.self)
-            
             for person in persons {
                 personsCodes[person.id] = person
             }
@@ -39,10 +39,25 @@ extension AddTaskView {
         func loadContracts() {
             let contracts = DatabaseAPI.getDataObjects(statementText: Contract.getAllStatementText,
                                                    ofType: Contract.self)
-            
             for contract in contracts {
                 contractsCodes[contract.id] = contract
             }
+        }
+        
+        func loadPersonsByContractNumber(contractNumber: Int) {
+            let organizationNumber = contractsCodes[contractNumber]!.organizationNumber
+            let newPersons = DatabaseAPI
+                .getDataObjects(statementText: ContactPerson.createGetByOrgNumberStatement(orgNumber: organizationNumber),
+                                ofType: ContactPerson.self)
+            
+            personsCodes.removeAll()
+            for person in newPersons {
+                personsCodes[person.id] = person
+            }
+        }
+
+        func addParticipatingPrinter(printer: Printer, count: Int) {
+            participationPrinters[printer] = count
         }
     }
 }

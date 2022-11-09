@@ -13,7 +13,12 @@ struct AddTaskView: View {
     
     @StateObject private var viewModel = ViewModel()
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject var workViewViewModel: WorkView.ViewModel
     
+    init(workViewViewModel: WorkView.ViewModel) {
+        self.workViewViewModel = workViewViewModel
+    }
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -57,6 +62,13 @@ struct AddTaskView: View {
                         }
                         if viewModel.enableContractSetting {
                             Toggle("Part of contract?", isOn: $viewModel.partOfContract.animation())
+                                .onChange(of: viewModel.partOfContract) { changedValue in
+                                    if changedValue {
+                                        viewModel.loadPersonsByContractNumber(contractNumber: viewModel.contractNumber)
+                                    } else {
+                                        viewModel.loadPersons()
+                                    }
+                                }
                             if viewModel.partOfContract {
                                 Picker("Contract", selection: $viewModel.contractNumber) {
                                     ForEach(Array(viewModel.contractsCodes.keys), id: \.self) { contractCode in
@@ -65,18 +77,54 @@ struct AddTaskView: View {
                                         }
                                     }
                                 }
+                                .onChange(of: viewModel.contractNumber) { newContractNumber in
+                                    viewModel.loadPersonsByContractNumber(contractNumber: newContractNumber)
+                                }
                             }
                         }
                     }
                     if viewModel.partOfContract {
                         Section("Participating printers") {
                             List {
-                                
+                                ForEach(Array(viewModel.participationPrinters.keys)) { printer in
+                                    VStack(alignment: .leading) {
+                                        Text("\(printer.manufacturer) \(printer.name)")
+                                            .font(.headline)
+                                        Text("Count: \(viewModel.participationPrinters[printer]!)")
+                                            .font(.subheadline)
+                                    }
+                                }
+                                .onDelete(perform: onParticipatingPrinterDelete)
                             }
                         }
                     }
                     Button("Submit") {
-                        // Create task
+                        var creationStatement = Task
+                            .createCreationStatement(
+                                plannedCompletionDate: viewModel.setDate ? viewModel.plannedCompletionDate : nil,
+                                taskDetails: viewModel.taskDetails,
+                                priorityCode: viewModel.priorityCode,
+                                taskTypeCode: viewModel.taskType,
+                                personNumber: viewModel.personNumber,
+                                contractNumber: viewModel.enableContractSetting ? viewModel.contractNumber : nil,
+                                authorNumber: viewModel.userId!)
+                        do {
+                            let taskId = try DatabaseAPI.executeStatementWithResultId(statementText: creationStatement)
+                            for (printer, count) in viewModel.participationPrinters {
+                                creationStatement = ParticipatingPrinter
+                                    .createCreationStatement(printerNumber: printer.id,
+                                                             taskNumber: taskId,
+                                                             count: count)
+                                try DatabaseAPI.executeStatement(statementText: creationStatement)
+                            }
+                            viewModel.alertTitle = "Success"
+                            viewModel.alertMessage = "Task created"
+                            workViewViewModel.loadTasks()
+                        } catch {
+                            viewModel.alertTitle = "Error"
+                            viewModel.alertMessage = error.localizedDescription
+                        }
+                        viewModel.showFinalAlert = true
                     }
                 }
                 .zIndex(0)
@@ -96,7 +144,14 @@ struct AddTaskView: View {
                     DispatchQueue.main.async {
                         viewModel.isLoading = true
                         if let user = AppState.user {
-                            viewModel.user = user
+                            let employees = DatabaseAPI
+                                .getDataObjects(statementText: Employee.getAllStatementText,
+                                                ofType: Employee.self)
+                            for employee in employees {
+                                if employee.login == user.username {
+                                    viewModel.userId = employee.id
+                                }
+                            }
                         }
                         viewModel.loadPersons()
                         viewModel.loadContracts()
@@ -124,14 +179,16 @@ struct AddTaskView: View {
                 }
             }
             .sheet(isPresented: $viewModel.showAddPrinterSheet) {
-                
+                AddParticipatingPrinterView(addTaskViewViewModel: viewModel)
             }
+        }
+    }
+    
+    func onParticipatingPrinterDelete(indexSet: IndexSet) {
+        indexSet.forEach { index in
+            let printer = Array(viewModel.participationPrinters.keys)[index]
+            viewModel.participationPrinters.removeValue(forKey: printer)
         }
     }
 }
 
-struct AddTaskView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddTaskView()
-    }
-}

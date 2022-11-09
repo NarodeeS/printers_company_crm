@@ -8,7 +8,15 @@
 import Foundation
 import PostgresClientKit
 
-class Printer: Identifiable, RowDerivable {
+class Printer: Identifiable, RowDerivable, Hashable {
+    static func == (lhs: Printer, rhs: Printer) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
     static let getAllStatementText = "SELECT * FROM printers;"
     
     typealias DataType = Printer
