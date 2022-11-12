@@ -75,6 +75,8 @@ class Printer: Identifiable, RowDerivable, Hashable {
                        printTechnologyCode: printTechnologyCode)
     }
     
+    
+    
     static func createCreationStatement(manufacturer: String,
                                         name: String, paperWeight: Int,
                                         colorsNumber: Int, resolution: String,

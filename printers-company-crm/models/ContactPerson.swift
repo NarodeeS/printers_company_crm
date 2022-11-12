@@ -35,6 +35,10 @@ class ContactPerson: Identifiable, RowDerivable {
         return "SELECT * FROM contact_persons WHERE (organization_number = \(orgNumber));"
     }
     
+    static func createGetByIdStatement(id: Int64) -> String {
+        return "SELECT * FROM contact_persons WHERE (person_number = \(id));"
+    }
+    
     static func createCreationStatement(personName: String, personMobile: Int64,
                                         personEmail: String, personMail: String,
                                         organizationNumber: Int) -> String {

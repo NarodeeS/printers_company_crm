@@ -171,6 +171,7 @@ GRANT INSERT ON employees TO admin;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO manager;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO worker;
 GRANT INSERT ON tasks, contracts, contact_persons, organizations TO manager;
+GRANT INSERT ON participating_printers TO manager, worker;
 
 GRANT UPDATE(performer_number) ON tasks TO manager;
 GRANT UPDATE(task_status, task_details, 
@@ -258,7 +259,11 @@ BEGIN
         NEW.actual_completion_date = NOW();
     ELSIF (OLD.task_status = 1) THEN
         RAISE EXCEPTION 'Can not update completed task';
-    ELSIF (NEW.planned_completion_date < NOW() OR NEW.planned_completion_date < OLD.creation_date) THEN
+    ELSIF (OLD.performer_number IS NOT NULL 
+           AND NEW.performer_number IS NOT NULL 
+           AND (SELECT employee_login FROM employees WHERE(employee_number = OLD.author_number)) != current_user) THEN 
+        RAISE EXCEPTION 'Cant not update performer';
+    ELSIF (NEW.planned_completion_date < NOW()::DATE OR NEW.planned_completion_date < OLD.creation_date) THEN
         RAISE EXCEPTION 'Wrong value for planned_completion_date';
     END IF;
     RETURN NEW;
@@ -410,6 +415,71 @@ BEGIN
         tasks_bad_time_count, tasks_bad_time_not_completed_count, 
         tasks_in_time_not_completed_count, path);
     EXECUTE statement;
+END; $$
+LANGUAGE plpgsql;
+
+CREATE FUNCTION generate_report(employee_number INTEGER, start_date DATE, end_date DATE) 
+RETURNS TABLE (
+    all_tasks_count INTEGER,
+    tasks_in_time_count INTEGER,
+    tasks_bad_time_count INTEGER, 
+    tasks_bad_time_not_completed_count INTEGER,
+    tasks_in_time_not_completed_count INTEGER
+)
+AS $$
+DECLARE
+    all_tasks_count INTEGER;
+    tasks_in_time_count INTEGER;
+    tasks_bad_time_count INTEGER; 
+    tasks_bad_time_not_completed_count INTEGER;
+    tasks_in_time_not_completed_count INTEGER; 
+    statement TEXT;
+BEGIN
+    all_tasks_count := (SELECT COUNT(*) 
+                        FROM tasks 
+                        WHERE ((performer_number = employee_number)
+        AND (creation_date >= start_date) 
+        AND (creation_date <= end_date)));
+
+    tasks_in_time_count := (SELECT COUNT(*) 
+                            FROM tasks
+                            WHERE ((performer_number = employee_number)
+        AND (creation_date >= start_date) 
+        AND (creation_date <= end_date) 
+        AND (actual_completion_date <= planned_completion_date)));
+
+    tasks_bad_time_count := (SELECT COUNT(*) 
+                             FROM tasks 
+                             WHERE ((performer_number = employee_number)
+        AND (creation_date >= start_date) 
+        AND (creation_date <= end_date) 
+        AND (actual_completion_date > planned_completion_date)));
+
+    tasks_bad_time_not_completed_count := (SELECT COUNT(*) 
+                                           FROM tasks 
+                                           WHERE ((performer_number = employee_number)
+        AND (creation_date >= start_date) 
+        AND (creation_date <= end_date) 
+        AND (NOW() < planned_completion_date)
+        AND (actual_completion_date IS NULL)));
+
+    tasks_in_time_not_completed_count := (SELECT COUNT(*) 
+                                          FROM tasks 
+                                          WHERE ((performer_number = employee_number)
+        AND (creation_date >= start_date) 
+        AND (creation_date <= end_date) 
+        AND (NOW() >= planned_completion_date) 
+        AND (actual_completion_date IS NULL)));
+    
+    statement := format('SELECT %s AS all_tasks_count, 
+                                      %s AS tasks_in_time_count, 
+                                      %s AS tasks_bad_time_count, 
+                                      %s AS tasks_bad_time_not_completed_count, 
+                                      %s AS tasks_in_time_not_completed_count;', 
+        all_tasks_count, tasks_in_time_count, 
+        tasks_bad_time_count, tasks_bad_time_not_completed_count, 
+        tasks_in_time_not_completed_count);
+    RETURN QUERY EXECUTE statement;
 END; $$
 LANGUAGE plpgsql;
 

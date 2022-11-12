@@ -40,6 +40,10 @@ class Employee: Identifiable, RowDerivable {
         return "CALL create_user('\(name)', '\(surname)', '\(login)', '\(password)', \(mobile)::BIGINT, '\(email)', \(positionCode)::SMALLINT);"
     }
     
+    static func createGetByIdStatement(id: Int) -> String {
+        return "SELECT * FROM employees WHERE (employee_number = \(id));"
+    }
+    
     static func createFromRow(row: Result<Row, any Error>) throws -> Employee {
         let columns = try row.get().columns
         let number = try columns[0].int()

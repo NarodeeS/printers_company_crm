@@ -154,4 +154,32 @@ class DatabaseAPI {
         }
         return employee
     }
+    
+    static func getEmployeeReport(startDate: Date, endDate: Date, employeeNumber: Int) throws -> [String: Int] {
+        let postgresStartDate = startDate.postgresDate(in: TimeZone.autoupdatingCurrent)
+        let postgresEndDate = endDate.postgresDate(in: TimeZone.autoupdatingCurrent)
+        let statementText = "SELECT * FROM generate_report(\(employeeNumber),"
+                                                   + " DATE '\(postgresStartDate)',"
+                                                   + " DATE '\(postgresEndDate)');"
+        var result = [String: Int]()
+        let connection = try getConnection(username: AppState.user?.username ?? "Unknown",
+                                           userPassword: AppState.user?.password ?? "Unknown")
+        defer {
+            connection.close()
+        }
+        let statement = try connection.prepareStatement(text: statementText)
+        defer {
+            statement.close()
+        }
+        let cursor = try statement.execute()
+        let row = try cursor.next()!.get()
+        let columns = row.columns
+        result["All tasks"] = try columns[0].int()
+        result["Tasks in time"] = try columns[1].int()
+        result["Tasks not in time"] = try columns[2].int()
+        result["Started, but expired tasks"] = try columns[3].int()
+        result["Started, but not expired tasks"] = try columns[4].int()
+
+        return result
+    }
 }

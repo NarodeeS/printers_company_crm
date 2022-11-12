@@ -33,10 +33,14 @@ class ParticipatingPrinter: Identifiable, RowDerivable {
                                     amount: amount)
     }
     
+    static func createGetByTaskIdStatement(taskId: Int64) -> String {
+        return "SELECT * FROM participating_printers WHERE (task_number = \(taskId));"
+    }
+    
     static func createCreationStatement(printerNumber: Int64,
                                         taskNumber: Int64,
                                         count: Int) -> String {
         return "INSERT INTO participating_printers(printer_number, task_number, amount) "
-             + "VALUES(\(printerNumber), \(taskNumber) \(count));"
+             + "VALUES(\(printerNumber), \(taskNumber), \(count));"
     }
 }

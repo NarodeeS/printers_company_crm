@@ -20,6 +20,7 @@
 		420AB624291AD45E00869FB6 /* ParticipatingPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420AB623291AD45E00869FB6 /* ParticipatingPrinter.swift */; };
 		420B3D992912FBA500B75FEB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420B3D982912FBA500B75FEB /* ProfileView.swift */; };
 		420B3D9B2912FEE300B75FEB /* ProfileView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420B3D9A2912FEE300B75FEB /* ProfileView-ViewModel.swift */; };
+		4213263B291C494A007AFB78 /* TaskDetailsView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4213263A291C494A007AFB78 /* TaskDetailsView-ViewModel.swift */; };
 		4227DE7C291902B300D5B57C /* PrintersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4227DE7B291902B300D5B57C /* PrintersView.swift */; };
 		4227DE812919068300D5B57C /* PrintersView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4227DE802919068300D5B57C /* PrintersView-ViewModel.swift */; };
 		4227DE83291906D600D5B57C /* Printer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4227DE82291906D600D5B57C /* Printer.swift */; };
@@ -32,12 +33,15 @@
 		425BD49E2917A61D00B90C42 /* AddPersonView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425BD49D2917A61D00B90C42 /* AddPersonView-ViewModel.swift */; };
 		425BD4A02917AFD700B90C42 /* ContactPersonDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425BD49F2917AFD700B90C42 /* ContactPersonDetailsView.swift */; };
 		425BD4A22918153F00B90C42 /* ContractDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425BD4A12918153F00B90C42 /* ContractDetailsView.swift */; };
+		42694093291B955B00D24C32 /* TaskDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42694092291B955B00D24C32 /* TaskDetailsView.swift */; };
 		428228C3290E7117004FE0BC /* EmployeeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428228C2290E7117004FE0BC /* EmployeeDetailsView.swift */; };
 		428228C7290E71C5004FE0BC /* EmployeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428228C6290E71C5004FE0BC /* EmployeesView.swift */; };
 		428228C9290E78A2004FE0BC /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428228C8290E78A2004FE0BC /* Employee.swift */; };
 		428591862916638000495E3B /* RowDerivable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428591852916638000495E3B /* RowDerivable.swift */; };
 		4287CA932914626B000C8EA1 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4287CA922914626B000C8EA1 /* Task.swift */; };
 		4287CA9529146288000C8EA1 /* AddTaskView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4287CA9429146288000C8EA1 /* AddTaskView-ViewModel.swift */; };
+		429980FD291ED6FB003C6480 /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429980FC291ED6FB003C6480 /* ReportView.swift */; };
+		429980FF291ED9FE003C6480 /* ReportView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429980FE291ED9FE003C6480 /* ReportView-ViewModel.swift */; };
 		42AE2373290DD5CD00CF49FE /* AddEmployeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AE2372290DD5CD00CF49FE /* AddEmployeeView.swift */; };
 		42AE2377290DD81800CF49FE /* DatabaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AE2376290DD81800CF49FE /* DatabaseAPI.swift */; };
 		42B2B7552916B2EF004DD799 /* AddClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B2B7542916B2EF004DD799 /* AddClientView.swift */; };
@@ -73,6 +77,7 @@
 		420AB623291AD45E00869FB6 /* ParticipatingPrinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipatingPrinter.swift; sourceTree = "<group>"; };
 		420B3D982912FBA500B75FEB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		420B3D9A2912FEE300B75FEB /* ProfileView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileView-ViewModel.swift"; sourceTree = "<group>"; };
+		4213263A291C494A007AFB78 /* TaskDetailsView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskDetailsView-ViewModel.swift"; sourceTree = "<group>"; };
 		4227DE7B291902B300D5B57C /* PrintersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintersView.swift; sourceTree = "<group>"; };
 		4227DE802919068300D5B57C /* PrintersView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrintersView-ViewModel.swift"; sourceTree = "<group>"; };
 		4227DE82291906D600D5B57C /* Printer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Printer.swift; sourceTree = "<group>"; };
@@ -85,12 +90,15 @@
 		425BD49D2917A61D00B90C42 /* AddPersonView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddPersonView-ViewModel.swift"; sourceTree = "<group>"; };
 		425BD49F2917AFD700B90C42 /* ContactPersonDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPersonDetailsView.swift; sourceTree = "<group>"; };
 		425BD4A12918153F00B90C42 /* ContractDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractDetailsView.swift; sourceTree = "<group>"; };
+		42694092291B955B00D24C32 /* TaskDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailsView.swift; sourceTree = "<group>"; };
 		428228C2290E7117004FE0BC /* EmployeeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeDetailsView.swift; sourceTree = "<group>"; };
 		428228C6290E71C5004FE0BC /* EmployeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesView.swift; sourceTree = "<group>"; };
 		428228C8290E78A2004FE0BC /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
 		428591852916638000495E3B /* RowDerivable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowDerivable.swift; sourceTree = "<group>"; };
 		4287CA922914626B000C8EA1 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		4287CA9429146288000C8EA1 /* AddTaskView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddTaskView-ViewModel.swift"; sourceTree = "<group>"; };
+		429980FC291ED6FB003C6480 /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
+		429980FE291ED9FE003C6480 /* ReportView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReportView-ViewModel.swift"; sourceTree = "<group>"; };
 		42AE2372290DD5CD00CF49FE /* AddEmployeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEmployeeView.swift; sourceTree = "<group>"; };
 		42AE2376290DD81800CF49FE /* DatabaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseAPI.swift; sourceTree = "<group>"; };
 		42B2B7542916B2EF004DD799 /* AddClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientView.swift; sourceTree = "<group>"; };
@@ -242,6 +250,7 @@
 				4287CA9429146288000C8EA1 /* AddTaskView-ViewModel.swift */,
 				42C0880329152FE0000852B3 /* AddContractView-ViewModel.swift */,
 				420AB621291ABAC700869FB6 /* AddParticipatingPrinterView-ViewModel.swift */,
+				4213263A291C494A007AFB78 /* TaskDetailsView-ViewModel.swift */,
 			);
 			path = "work-view-models";
 			sourceTree = "<group>";
@@ -262,6 +271,7 @@
 			children = (
 				42B319542911A92D00C57ABB /* EmployeesView-ViewModel.swift */,
 				42364D262912AC9D00062374 /* AddEmployeeView-ViewModel.swift */,
+				429980FE291ED9FE003C6480 /* ReportView-ViewModel.swift */,
 			);
 			path = "employees-view-models";
 			sourceTree = "<group>";
@@ -274,6 +284,7 @@
 				42C087FB29152235000852B3 /* AddContractView.swift */,
 				425BD4A12918153F00B90C42 /* ContractDetailsView.swift */,
 				420AB61F291ABA9C00869FB6 /* AddParticipatingPrinterView.swift */,
+				42694092291B955B00D24C32 /* TaskDetailsView.swift */,
 			);
 			path = "work-views";
 			sourceTree = "<group>";
@@ -284,6 +295,7 @@
 				428228C6290E71C5004FE0BC /* EmployeesView.swift */,
 				428228C2290E7117004FE0BC /* EmployeeDetailsView.swift */,
 				42AE2372290DD5CD00CF49FE /* AddEmployeeView.swift */,
+				429980FC291ED6FB003C6480 /* ReportView.swift */,
 			);
 			path = "employees-views";
 			sourceTree = "<group>";
@@ -377,6 +389,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0455162A28FD993C0006F862 /* LoginView.swift in Sources */,
+				429980FF291ED9FE003C6480 /* ReportView-ViewModel.swift in Sources */,
 				420AB620291ABA9C00869FB6 /* AddParticipatingPrinterView.swift in Sources */,
 				42364D2B2912C0FE00062374 /* MainView-ViewModel.swift in Sources */,
 				42364D292912BD6D00062374 /* LoginView-ViewModel.swift in Sources */,
@@ -394,10 +407,13 @@
 				425BD4A02917AFD700B90C42 /* ContactPersonDetailsView.swift in Sources */,
 				420AB624291AD45E00869FB6 /* ParticipatingPrinter.swift in Sources */,
 				42364D272912AC9D00062374 /* AddEmployeeView-ViewModel.swift in Sources */,
+				429980FD291ED6FB003C6480 /* ReportView.swift in Sources */,
 				420B3D9B2912FEE300B75FEB /* ProfileView-ViewModel.swift in Sources */,
 				42B2B75D2916FF42004DD799 /* ClientDetailsView-ViewModel.swift in Sources */,
+				42694093291B955B00D24C32 /* TaskDetailsView.swift in Sources */,
 				428228C9290E78A2004FE0BC /* Employee.swift in Sources */,
 				42BED68C291261380056AA48 /* NumberLimiter.swift in Sources */,
+				4213263B291C494A007AFB78 /* TaskDetailsView-ViewModel.swift in Sources */,
 				04B474F228FDE40D001BC58C /* AppState.swift in Sources */,
 				420B3D992912FBA500B75FEB /* ProfileView.swift in Sources */,
 				04B474F028FDE07D001BC58C /* User.swift in Sources */,

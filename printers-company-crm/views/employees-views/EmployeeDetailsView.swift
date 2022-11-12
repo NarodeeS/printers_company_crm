@@ -32,6 +32,11 @@ struct EmployeeDetailsView: View {
                     .bold()
                 Text(employee.role.rawValue)
             }
+            NavigationLink {
+                ReportView(selectedEmployee: employee)
+            } label: {
+                Text("View report")
+            }
         }
         .listStyle(.inset)
         .navigationTitle("\(employee.name) \(employee.surname)")

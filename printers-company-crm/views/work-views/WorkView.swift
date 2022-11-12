@@ -35,7 +35,12 @@ struct WorkView: View {
                         List {
                             ForEach(viewModel.tasks) { task in
                                 NavigationLink {
-                                    // task details
+                                    TaskDetailsView(selectedTask: task,
+                                                    priorityCodes: viewModel.priorityCodes,
+                                                    tasksTypes: viewModel.tasksTypes,
+                                                    contracts: viewModel.contracts,
+                                                    organizations: viewModel.organizations,
+                                                    workViewViewModel: viewModel)
                                 } label: {
                                     VStack(alignment: .leading) {
                                         if let taskType = viewModel.tasksTypes[task.taskTypeCode],

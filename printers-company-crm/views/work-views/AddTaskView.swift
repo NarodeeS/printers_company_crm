@@ -106,7 +106,7 @@ struct AddTaskView: View {
                                 priorityCode: viewModel.priorityCode,
                                 taskTypeCode: viewModel.taskType,
                                 personNumber: viewModel.personNumber,
-                                contractNumber: viewModel.enableContractSetting ? viewModel.contractNumber : nil,
+                                contractNumber: viewModel.partOfContract ? viewModel.contractNumber : nil,
                                 authorNumber: viewModel.userId!)
                         do {
                             let taskId = try DatabaseAPI.executeStatementWithResultId(statementText: creationStatement)
