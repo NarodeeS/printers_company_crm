@@ -12,6 +12,7 @@ extension MainView {
         @Published var tabSelection = 1
         @Published var showingLoginSheet = false
         @Published var user: User?
+        @Published var isLoading = false
         
         func setUser() {
             user = AppState.user

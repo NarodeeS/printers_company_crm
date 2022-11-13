@@ -65,11 +65,13 @@ struct PrintersView: View {
                 let dispatchQueue = DispatchQueue(label: "LoadingResources", qos: .background)
                 dispatchQueue.async {
                     DispatchQueue.main.async {
-                        viewModel.isLoading = true
-                        viewModel.loadPrinters()
-                        viewModel.loadPaperFormatCodes()
-                        viewModel.loadPrintTechnologyCodes()
-                        viewModel.isLoading = false
+                        withAnimation {
+                            viewModel.isLoading = true
+                            viewModel.loadPrinters()
+                            viewModel.loadPaperFormatCodes()
+                            viewModel.loadPrintTechnologyCodes()
+                            viewModel.isLoading = false
+                        }
                     }
                 }
             }

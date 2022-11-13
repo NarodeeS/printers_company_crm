@@ -11,43 +11,59 @@ struct MainView: View {
     @StateObject private var viewModel = ViewModel()
     
     var body: some View {
-        TabView(selection: $viewModel.tabSelection) {
-            ProfileView(mainViewViewModel: viewModel)
-                .tabItem {
-                    Label("Profile", systemImage: "person")
-                }
-                .tag(1)
-            
-            WorkView()
-                .tabItem {
-                    Label("Work", systemImage: "tray.full.fill")
-                }
-                .tag(2)
-            
-            ClientsView()
-                .tabItem{
-                    Label("Clients", systemImage: "person.line.dotted.person")
-                }
-                .tag(3)
-            
-            EmployeesView()
-                .tabItem {
-                    Label("Users", systemImage: "person.3")
-                }
-                .tag(4)
-            PrintersView()
-                .tabItem {
-                    Label("Printers", systemImage: "printer.fill")
-                }
-                .tag(5)
+        ZStack {
+            if viewModel.isLoading {
+                ProgressView()
+                    .zIndex(1)
+            }
+            TabView(selection: $viewModel.tabSelection) {
+                ProfileView(mainViewViewModel: viewModel)
+                    .tabItem {
+                        Label("Profile", systemImage: "person")
+                    }
+                    .tag(1)
+                
+                WorkView()
+                    .tabItem {
+                        Label("Work", systemImage: "tray.full.fill")
+                    }
+                    .tag(2)
+                
+                ClientsView()
+                    .tabItem{
+                        Label("Clients", systemImage: "person.line.dotted.person")
+                    }
+                    .tag(3)
+                
+                EmployeesView()
+                    .tabItem {
+                        Label("Users", systemImage: "person.3")
+                    }
+                    .tag(4)
+                PrintersView()
+                    .tabItem {
+                        Label("Printers", systemImage: "printer.fill")
+                    }
+                    .tag(5)
+            }
+            .zIndex(0)
         }
         .sheet(isPresented: $viewModel.showingLoginSheet) {
-            LoginView(tabSelection: $viewModel.tabSelection)
+            LoginView(mainViewViewModel: viewModel)
         }
-        .onAppear{
-            AppState.user = loadUser()
-            if !AppState.userLoggedIn {
-                viewModel.showingLoginSheet = true
+        .task {
+            let dispatchQueue = DispatchQueue(label: "LoadingResources", qos: .background)
+            dispatchQueue.async {
+                DispatchQueue.main.async {
+                    withAnimation {
+                        viewModel.isLoading = true
+                        AppState.user = loadUser()
+                        if !AppState.userLoggedIn {
+                            viewModel.showingLoginSheet = true
+                        }
+                        viewModel.isLoading = false
+                    }
+                }
             }
         }
     }

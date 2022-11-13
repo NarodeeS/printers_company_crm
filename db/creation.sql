@@ -162,7 +162,7 @@ GRANT SELECT ON tasks, employees,
                 printers, participating_printers
                 TO manager, worker;
 
-GRANT INSERT(planned_completion_date, task_details, 
+GRANT INSERT(planned_completion_date, task_status,task_details, 
              priority_code, task_type_code, 
              person_number, contract_number, author_number) ON tasks TO worker; 
 
@@ -262,7 +262,7 @@ BEGIN
     ELSIF (OLD.performer_number IS NOT NULL 
            AND NEW.performer_number IS NOT NULL 
            AND (SELECT employee_login FROM employees WHERE(employee_number = OLD.author_number)) != current_user) THEN 
-        RAISE EXCEPTION 'Cant not update performer';
+        RAISE EXCEPTION 'Can not update performer';
     ELSIF (NEW.planned_completion_date < NOW()::DATE OR NEW.planned_completion_date < OLD.creation_date) THEN
         RAISE EXCEPTION 'Wrong value for planned_completion_date';
     END IF;
@@ -525,5 +525,3 @@ BEGIN
     RETURN;
 END; $$
 LANGUAGE plpgsql;
-
-

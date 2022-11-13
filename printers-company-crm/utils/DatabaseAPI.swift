@@ -16,6 +16,7 @@ class DatabaseAPI {
         configuration.database = AppState.databaseName!
         configuration.user = username
         configuration.credential = .scramSHA256(password: userPassword)
+        configuration.socketTimeout = 3
         
         let connection = try PostgresClientKit.Connection(configuration: configuration)
         return connection

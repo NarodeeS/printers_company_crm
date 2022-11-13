@@ -10,7 +10,7 @@ import PostgresClientKit
 
 struct LoginView: View {
     @StateObject private var viewModel = ViewModel()
-    @Binding var tabSelection: Int
+    @ObservedObject var mainViewViewModel: MainView.ViewModel
     
     @Environment(\.dismiss) private var dismiss
     
@@ -31,14 +31,14 @@ struct LoginView: View {
                                                  username: viewModel.username,
                                                  password: viewModel.userPassword)
                             try AppState.user!.save()
-                            tabSelection = 2
+                            mainViewViewModel.tabSelection = 2
                         }
                         dismiss()
                     } catch PostgresError.socketError {
-                        viewModel.alertMessage = "The connection could not be established. Verify the validity of the entered data"
+                        viewModel.alertMessage = "The connection could not be established. Contact developers"
                         viewModel.showingConnectionError = true
                     } catch {
-                        viewModel.alertMessage = error.localizedDescription
+                        viewModel.alertMessage = "Wrong credentials"
                         viewModel.showingConnectionError = true
                     }
                 }

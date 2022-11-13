@@ -31,7 +31,7 @@ class Task: Identifiable, RowDerivable {
          taskStatus: Int, tasksDetails: String,
          priorityCode: Int, taskTypeCode: Int,
          personNumber: Int64, contractNumber: Int? = nil,
-         authorNumber: Int) {
+         authorNumber: Int, performerNumber: Int?) {
         self.id = id
         self.creationDate = creationDate
         self.plannedVompletionDate = plannedVompletionDate
@@ -43,20 +43,19 @@ class Task: Identifiable, RowDerivable {
         self.personNumber = personNumber
         self.contractNumber = contractNumber
         self.authorNumber = authorNumber
+        self.performerNumber = performerNumber
     }
     
     static func createCreationStatement(plannedCompletionDate: Date?, taskDetails: String,
                                         priorityCode: Int, taskTypeCode: Int,
                                         personNumber: Int64, contractNumber: Int?,
                                         authorNumber: Int) -> String {
-        let creationDate = Date()
-        let postgresCreationDate = creationDate.postgresDate(in: TimeZone.autoupdatingCurrent)
         let taskStatus = 0
         var plannedDateExists = false
         if let _ = plannedCompletionDate { plannedDateExists = true }
         var contractNumberExists = false
         if let _ = contractNumber {contractNumberExists = true}
-        return "INSERT INTO tasks(creation_date, \(plannedDateExists ? "planned_completion_date,": "") task_status, task_details, priority_code, task_type_code, person_number, \(contractNumberExists ? "contract_number,": "") author_number) VALUES (DATE '\(postgresCreationDate)', \(plannedDateExists ? "DATE '\(plannedCompletionDate!.postgresDate(in: TimeZone.autoupdatingCurrent))'," : "") \(taskStatus), '\(taskDetails)', \(priorityCode), \(taskTypeCode), \(personNumber), \(contractNumberExists ? "\(contractNumber!),": "") \(authorNumber)) RETURNING task_number;"
+        return "INSERT INTO tasks(\(plannedDateExists ? "planned_completion_date,": "") task_status, task_details, priority_code, task_type_code, person_number, \(contractNumberExists ? "contract_number,": "") author_number) VALUES (\(plannedDateExists ? "DATE '\(plannedCompletionDate!.postgresDate(in: TimeZone.autoupdatingCurrent))'," : "") \(taskStatus), '\(taskDetails)', \(priorityCode), \(taskTypeCode), \(personNumber), \(contractNumberExists ? "\(contractNumber!),": "") \(authorNumber)) RETURNING task_number;"
         
     }
     
@@ -88,11 +87,12 @@ class Task: Identifiable, RowDerivable {
             contractNumber = try columns[9].int()
         }
         let authorNumber = try columns[10].int()
+        let performerNumber = try columns[11].optionalInt()
         return Task(id: id, creationDate: creationDate!,
                     plannedVompletionDate: plannedCompletionDate, actualCompletionDate: actualCompletionDate,
                     taskStatus: taskStatus, tasksDetails: taskDetails,
                     priorityCode: priorityCode, taskTypeCode: taskTypeCode,
                     personNumber: personNumber, contractNumber: contractNumber,
-                    authorNumber: authorNumber)
+                    authorNumber: authorNumber, performerNumber: performerNumber)
     }
 }

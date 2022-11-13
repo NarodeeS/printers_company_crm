@@ -61,10 +61,12 @@ struct EmployeesView: View {
                 let dispatchQueue = DispatchQueue(label: "Loading resources", qos: .background)
                 dispatchQueue.async {
                     DispatchQueue.main.async {
-                        viewModel.isLoading = true
-                        viewModel.loadEmployees()
-                        viewModel.user = AppState.user
-                        viewModel.isLoading = false
+                        withAnimation {
+                            viewModel.isLoading = true
+                            viewModel.loadEmployees()
+                            viewModel.user = AppState.user
+                            viewModel.isLoading = false
+                        }
                     }
                 }
             }

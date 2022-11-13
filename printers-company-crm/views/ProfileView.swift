@@ -13,53 +13,61 @@ struct ProfileView: View {
     
     var body: some View {
         NavigationView {
-            HStack {
-                VStack(alignment: .leading) {
-                    if let user = viewModel.user {
-                        if user.role == .admin {
-                            Text("Login: " + user.username)
-                                .font(.title2)
-                                .padding()
-                            Text("Role: " + user.role.rawValue)
-                                .font(.title2)
-                                .padding()
-                        } else {
-                            if let user = viewModel.employeeInfo {
-                                HStack {
-                                    Text(user.name)
-                                    Text(user.surname)
+            ZStack{
+                if viewModel.isLoading {
+                    ProgressView()
+                        .zIndex(1)
+                }
+                HStack {
+                    VStack(alignment: .leading) {
+                        if let user = viewModel.user {
+                            if user.role == .admin {
+                                Text("Login: " + user.username)
+                                    .font(.title2)
+                                    .padding()
+                                Text("Role: " + user.role.rawValue)
+                                    .font(.title2)
+                                    .padding()
+                            } else {
+                                if let user = viewModel.employeeInfo {
+                                    HStack {
+                                        Text(user.name)
+                                        Text(user.surname)
+                                    }
+                                    .font(.title)
+                                    .padding()
+                                    List {
+                                        HStack {
+                                            Text("Login: ")
+                                                .bold()
+                                            Text(user.login)
+                                        }
+                                        HStack {
+                                            Text("Phone number: ")
+                                                .bold()
+                                            Text(String(user.mobile))
+                                        }
+                                        HStack {
+                                            Text("Email: ")
+                                                .bold()
+                                            Text(user.email)
+                                        }
+                                        HStack {
+                                            Text("Role: ")
+                                                .bold()
+                                            Text(user.role.rawValue)
+                                        }
+                                    }
+                                    .listStyle(.inset)
                                 }
-                                .font(.title)
-                                .padding()
-                                List {
-                                    HStack {
-                                        Text("Login: ")
-                                            .bold()
-                                        Text(user.login)
-                                    }
-                                    HStack {
-                                        Text("Phone number: ")
-                                            .bold()
-                                        Text(String(user.mobile))
-                                    }
-                                    HStack {
-                                        Text("Email: ")
-                                            .bold()
-                                        Text(user.email)
-                                    }
-                                    HStack {
-                                        Text("Role: ")
-                                            .bold()
-                                        Text(user.role.rawValue)
-                                    }
-                                }
-                                .listStyle(.inset)
                             }
                         }
+                        Spacer()
                     }
                     Spacer()
                 }
-                Spacer()
+                .zIndex(0)
+                
             }
             .navigationTitle("Profile")
             .toolbar {
@@ -79,16 +87,18 @@ struct ProfileView: View {
                 let dispatchQueue = DispatchQueue(label: "LoadingResources", qos: .background)
                 dispatchQueue.async {
                     DispatchQueue.main.async {
-                        viewModel.isLoading = true
-                        if let user = AppState.user {
-                            viewModel.user = user
-                            mainViewViewModel.setUser()
-                            
-                            if let employee = try? DatabaseAPI.getUserByLogin(login: viewModel.user!.username) {
-                                viewModel.employeeInfo = employee
+                        withAnimation {
+                            viewModel.isLoading = true
+                            if let user = AppState.user {
+                                viewModel.user = user
+                                mainViewViewModel.setUser()
+                                
+                                if let employee = try? DatabaseAPI.getUserByLogin(login: viewModel.user!.username) {
+                                    viewModel.employeeInfo = employee
+                                }
                             }
+                            viewModel.isLoading = false
                         }
-                        viewModel.isLoading = false
                     }
                 }
             }

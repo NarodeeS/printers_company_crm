@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PostgresClientKit
 
 struct AddClientView: View {
     @StateObject private var viewModel = ViewModel()
@@ -42,9 +43,12 @@ struct AddClientView: View {
                         clientsViewViewModel.loadOrganizations()
                         viewModel.alertTitle = "Success"
                         viewModel.alertMessage = "Client created"
+                    } catch PostgresError.sqlError(let notice) {
+                        viewModel.alertTitle = "Error"
+                        viewModel.alertMessage = notice.detail ?? "Unknown"
                     } catch {
                         viewModel.alertTitle = "Error"
-                        viewModel.alertMessage = "Can't create client"
+                        viewModel.alertMessage = "Unknown error"
                     }
                     viewModel.showAlert.toggle()
                 }

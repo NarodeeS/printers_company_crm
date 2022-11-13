@@ -67,7 +67,7 @@ struct TaskDetailsView: View {
                     }
                 }
                 if viewModel.enableDetailsSetting && selectedTask.taskStatus == 0 {
-                    TextField("Details", text: $viewModel.taskDetails)
+                    TextField("Details", text: $viewModel.taskDetailsNew)
                         .autocorrectionDisabled(true)
                         .autocapitalization(.none)
                 } else {
@@ -148,8 +148,8 @@ struct TaskDetailsView: View {
             let dispatchQueue = DispatchQueue(label: "LoadingResources", qos: .background)
             dispatchQueue.async {
                 DispatchQueue.main.async {
-                    viewModel.isLoading = true
                     withAnimation {
+                        viewModel.isLoading = true
                         if let person = viewModel.getContactPersonById(id: selectedTask.personNumber) {
                             viewModel.taskPerson = person
                         }
@@ -168,17 +168,23 @@ struct TaskDetailsView: View {
                             if let employee = try? DatabaseAPI.getUserByLogin(login: user.username) {
                                 viewModel.userData = employee
                                 
-                                if viewModel.userData!.role == .manager && selectedTask.performerNumber == nil {
+                                if viewModel.userData!.role == .manager
+                                    && (selectedTask.performerNumber == nil
+                                        || selectedTask.authorNumber == viewModel.userData!.id){
                                     viewModel.enablePerformerSetting = true
-                                }
+                                } else { viewModel.enablePerformerSetting = false }
                                 
                                 if viewModel.userData!.id == selectedTask.authorNumber {
                                     viewModel.enableDateSetting = true
                                     viewModel.enableDetailsSetting = true
+                                } else {
+                                    viewModel.enableDateSetting = false
+                                    viewModel.enableDetailsSetting = false
                                 }
                             }
                         }
-                        viewModel.taskDetails = selectedTask.tasksDetails
+                        viewModel.taskDetailsNew = selectedTask.tasksDetails
+                        viewModel.taskDetailsOld = selectedTask.tasksDetails
                         viewModel.loadEmployeesCodes()
                         viewModel.loadParticipatingPrinters(taskId: selectedTask.id)
                         viewModel.isLoading = false
@@ -187,7 +193,9 @@ struct TaskDetailsView: View {
             }
         }
         .alert(viewModel.alertTitle, isPresented: $viewModel.showAlert) {
-            Button("OK") {}
+            Button("OK") {
+                dismiss()
+            }
         } message: {
             Text(viewModel.alertMessage)
         }
@@ -211,16 +219,20 @@ struct TaskDetailsView: View {
                     }
                 }
                 
-                if viewModel.isPerfomerSet || viewModel.isCompletionDateSet {
+                if viewModel.isPerfomerSet || viewModel.isCompletionDateSet
+                    || (viewModel.taskDetailsOld != viewModel.taskDetailsNew) {
                     Button("Save") {
                         var statement = "UPDATE tasks SET "
-                        statement += "task_details = '\(viewModel.taskDetails)'"
+                        if viewModel.taskDetailsOld != viewModel.taskDetailsNew {
+                            statement += "task_details = '\(viewModel.taskDetailsNew)',"
+                        }
                         if viewModel.isPerfomerSet {
-                            statement += ", performer_number = \(viewModel.performerCode)"
+                            statement += "performer_number = \(viewModel.performerCode),"
                         }
                         if viewModel.isCompletionDateSet {
-                            statement += ", planned_completion_date = DATE '\(viewModel.plannedCompletionDate.postgresDate(in: TimeZone.autoupdatingCurrent))'"
+                            statement += "planned_completion_date = DATE '\(viewModel.plannedCompletionDate.postgresDate(in: TimeZone.autoupdatingCurrent))',"
                         }
+                        statement = String(statement.dropLast())
                         statement += " WHERE (task_number = \(selectedTask.id));"
                         do {
                             try DatabaseAPI.executeStatement(statementText: statement)

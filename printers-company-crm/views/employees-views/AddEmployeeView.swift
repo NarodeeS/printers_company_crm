@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PostgresClientKit
 
 struct AddEmployeeView: View {
     private let passwordLength = 12
@@ -91,10 +92,13 @@ struct AddEmployeeView: View {
                             employeesViewViewModel.loadEmployees()
                             viewModel.alertTitle = "New user created"
                             viewModel.alertMessage = "Do not forget to give login and password to the employee"
+                        } catch PostgresError.sqlError(let notice) {
+                            viewModel.alertTitle = "Error"
+                            viewModel.alertMessage = notice.detail ?? "Unknown"
                         }
                         catch {
                             viewModel.alertTitle = "Error"
-                            viewModel.alertMessage = error.localizedDescription
+                            viewModel.alertMessage = "Unknown error"
                         }
                         viewModel.showingAlert.toggle()
                     }

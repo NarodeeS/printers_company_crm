@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PostgresClientKit
 
 struct AddTaskView: View {
     private var tasksTypes = DatabaseAPI.getClassifierValues(tableName: "tasks_type_classifier")
@@ -120,9 +121,12 @@ struct AddTaskView: View {
                             viewModel.alertTitle = "Success"
                             viewModel.alertMessage = "Task created"
                             workViewViewModel.loadTasks()
+                        } catch PostgresError.sqlError(let notice) {
+                            viewModel.alertTitle = "Error"
+                            viewModel.alertMessage = notice.detail ?? "Unknown"
                         } catch {
                             viewModel.alertTitle = "Error"
-                            viewModel.alertMessage = error.localizedDescription
+                            viewModel.alertMessage = "Unknown error"
                         }
                         viewModel.showFinalAlert = true
                     }
@@ -142,30 +146,32 @@ struct AddTaskView: View {
                 let dispatchQueue = DispatchQueue(label: "Loading resources", qos: .background)
                 dispatchQueue.async {
                     DispatchQueue.main.async {
-                        viewModel.isLoading = true
-                        if let user = AppState.user {
-                            let employees = DatabaseAPI
-                                .getDataObjects(statementText: Employee.getAllStatementText,
-                                                ofType: Employee.self)
-                            for employee in employees {
-                                if employee.login == user.username {
-                                    viewModel.userId = employee.id
+                        withAnimation {
+                            viewModel.isLoading = true
+                            if let user = AppState.user {
+                                let employees = DatabaseAPI
+                                    .getDataObjects(statementText: Employee.getAllStatementText,
+                                                    ofType: Employee.self)
+                                for employee in employees {
+                                    if employee.login == user.username {
+                                        viewModel.userId = employee.id
+                                    }
                                 }
                             }
-                        }
-                        viewModel.loadPersons()
-                        viewModel.loadContracts()
-                        if viewModel.personsCodes.count == 0 {
-                            viewModel.alertTitle = "Error"
-                            viewModel.alertMessage = "You need to add at least one contact person"
-                            viewModel.showFinalAlert = true
-                        }
-                        viewModel.personNumber = viewModel.personsCodes.first!.key
-                        if viewModel.contractsCodes.count > 0 {
-                            viewModel.enableContractSetting = true
-                            viewModel.contractNumber = viewModel.contractsCodes.first!.key
-                        }
-                        viewModel.isLoading = false
+                            viewModel.loadPersons()
+                            viewModel.loadContracts()
+                            if viewModel.personsCodes.count == 0 {
+                                viewModel.alertTitle = "Error"
+                                viewModel.alertMessage = "You need to add at least one contact person"
+                                viewModel.showFinalAlert = true
+                            }
+                            viewModel.personNumber = viewModel.personsCodes.first!.key
+                            if viewModel.contractsCodes.count > 0 {
+                                viewModel.enableContractSetting = true
+                                viewModel.contractNumber = viewModel.contractsCodes.first!.key
+                            }
+                            viewModel.isLoading = false
+                        }	
                     }
                 }
             }

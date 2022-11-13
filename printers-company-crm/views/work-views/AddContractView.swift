@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PostgresClientKit
 
 struct AddContractView: View {
     @StateObject private var viewModel = ViewModel()
@@ -40,10 +41,13 @@ struct AddContractView: View {
                                 workViewViewModel.loadContracts()
                                 viewModel.alertTitle = "Success"
                                 viewModel.alertMessage = "Contract created"
+                            } catch PostgresError.sqlError(let notice) {
+                                viewModel.alertTitle = "Error"
+                                viewModel.alertMessage = notice.detail ?? "Unknown"
                             } catch {
                                 workViewViewModel.loadContracts()
                                 viewModel.alertTitle = "Error"
-                                viewModel.alertMessage = error.localizedDescription
+                                viewModel.alertMessage = "Unknown error"
                             }
                             viewModel.showAlert = true
                         }
@@ -56,16 +60,18 @@ struct AddContractView: View {
                 let dispatchQueue = DispatchQueue(label: "Loading resources", qos: .background)
                 dispatchQueue.async {
                     DispatchQueue.main.async {
-                        viewModel.isLoading = true
-                        viewModel.loadOrganizations()
-                        if viewModel.organizationCodes.count == 0 {
-                            viewModel.alertTitle = "Error"
-                            viewModel.alertMessage = "To create contract you need to have at least one client"
-                            viewModel.showAlert = true
-                        } else {
-                            viewModel.organizationNumber = viewModel.organizationCodes.keys.first!
+                        withAnimation {
+                            viewModel.isLoading = true
+                            viewModel.loadOrganizations()
+                            if viewModel.organizationCodes.count == 0 {
+                                viewModel.alertTitle = "Error"
+                                viewModel.alertMessage = "To create contract you need to have at least one client"
+                                viewModel.showAlert = true
+                            } else {
+                                viewModel.organizationNumber = viewModel.organizationCodes.keys.first!
+                            }
+                            viewModel.isLoading = false
                         }
-                        viewModel.isLoading = false
                     }
                 }
             }

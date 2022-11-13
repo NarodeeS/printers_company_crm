@@ -83,13 +83,15 @@ struct ClientDetailsView: View {
                 let dispatchQueue = DispatchQueue(label: "Loading resources", qos: .background)
                 dispatchQueue.async {
                     DispatchQueue.main.async {
-                        viewModel.isLoading = true
-                        if let user = AppState.user {
-                            viewModel.user = user
+                        withAnimation {
+                            viewModel.isLoading = true
+                            if let user = AppState.user {
+                                viewModel.user = user
+                            }
+                            viewModel.organization = selectedOrganization
+                            viewModel.loadContactPersons()
+                            viewModel.isLoading = false
                         }
-                        viewModel.organization = selectedOrganization
-                        viewModel.loadContactPersons()
-                        viewModel.isLoading = false
                     }
                 }
             }

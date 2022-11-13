@@ -123,14 +123,16 @@ struct WorkView: View {
                 let dispatchQueue = DispatchQueue(label: "Loading resources", qos: .background)
                 dispatchQueue.async {
                     DispatchQueue.main.async {
-                        viewModel.isLoading = true
-                        viewModel.loadTaskTypes()
-                        viewModel.loadPriorityCodes()
-                        viewModel.user = AppState.user
-                        viewModel.loadTasks()
-                        viewModel.loadContracts()
-                        viewModel.loadOrganizations()
-                        viewModel.isLoading = false
+                        withAnimation {
+                            viewModel.isLoading = true
+                            viewModel.loadTaskTypes()
+                            viewModel.loadPriorityCodes()
+                            viewModel.user = AppState.user
+                            viewModel.loadTasks()
+                            viewModel.loadContracts()
+                            viewModel.loadOrganizations()
+                            viewModel.isLoading = false
+                        }
                     }
                 }
             }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PostgresClientKit
 
 struct AddPersonView: View {
     var organizationNumber: Int
@@ -46,9 +47,13 @@ struct AddPersonView: View {
                         clientDetailsViewViewModel.loadContactPersons()
                         viewModel.alertTitle = "Success"
                         viewModel.alertMessage = "New contact person created"
+                        
+                    } catch PostgresError.sqlError(let notice) {
+                        viewModel.alertTitle = "Error"
+                        viewModel.alertMessage = notice.detail ?? "Unknown"
                     } catch {
                         viewModel.alertTitle = "Error"
-                        viewModel.alertMessage = error.localizedDescription
+                        viewModel.alertMessage = "Unknown error"
                     }
                     viewModel.showAlert = true
                 }

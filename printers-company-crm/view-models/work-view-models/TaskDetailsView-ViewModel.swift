@@ -22,7 +22,8 @@ extension TaskDetailsView {
         @Published var isLoading = false
         @Published var enableDateSetting = false
         @Published var plannedCompletionDate = Date()
-        @Published var taskDetails = ""
+        @Published var taskDetailsNew = ""
+        @Published var taskDetailsOld = ""
         @Published var isCompletionDateSet = false
         @Published var isPerfomerSet = false
         @Published var performerCode = 1
@@ -40,10 +41,11 @@ extension TaskDetailsView {
             let statement = Employee.getAllStatementText
             let employees = DatabaseAPI.getDataObjects(statementText: statement,
                                                        ofType: Employee.self)
-            
-            for employee in employees {
-                if employee.role == .worker || (employee.id == userData!.id && userData!.role == .manager) {
-                    employeesCodes[employee.id] = employee
+            if AppState.user!.role != .admin {
+                for employee in employees {
+                    if employee.role == .worker || (employee.id == userData!.id && userData!.role == .manager) {
+                        employeesCodes[employee.id] = employee
+                    }
                 }
             }
         }

@@ -42,14 +42,16 @@ struct AddParticipatingPrinterView: View {
                 let dispatchQueue = DispatchQueue(label: "Loading resources", qos: .background)
                 dispatchQueue.async {
                     DispatchQueue.main.async {
-                        viewModel.isLoading = true
-                        viewModel.loadPrintersNumbers()
-                        if viewModel.printersNumbers.count == 0 {
-                            viewModel.alertTitle = "Error"
-                            viewModel.alertMessage = "To add participating printer you need to have at least one printer"
-                            viewModel.showAlert = true
+                        withAnimation {
+                            viewModel.isLoading = true
+                            viewModel.loadPrintersNumbers()
+                            if viewModel.printersNumbers.count == 0 {
+                                viewModel.alertTitle = "Error"
+                                viewModel.alertMessage = "To add participating printer you need to have at least one printer"
+                                viewModel.showAlert = true
+                            }
+                            viewModel.isLoading = false
                         }
-                        viewModel.isLoading = false
                     }
                 }
             }
