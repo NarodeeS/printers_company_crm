@@ -52,6 +52,7 @@ struct AddTaskView: View {
                         if viewModel.setDate {
                             DatePicker("Completion date",
                                        selection: $viewModel.plannedCompletionDate,
+                                       in: Date()...,
                                        displayedComponents: [.date])
                         }
                         Picker("Contact person", selection: $viewModel.personNumber) {

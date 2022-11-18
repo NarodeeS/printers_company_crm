@@ -16,7 +16,10 @@ struct ReportView: View {
         VStack {
             Form {
                 DatePicker("Start date", selection: $viewModel.startDate, displayedComponents: [.date])
-                DatePicker("End date", selection: $viewModel.endDate, displayedComponents: [.date])
+                DatePicker("End date",
+                           selection: $viewModel.endDate,
+                           in: viewModel.startDate...,
+                           displayedComponents: [.date])
                 Button("Generate") {
                     withAnimation {
                         viewModel.loadEmployeeReport(employeeNumber: selectedEmployee.id)

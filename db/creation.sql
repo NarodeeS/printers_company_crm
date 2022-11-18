@@ -373,27 +373,27 @@ BEGIN
                         FROM tasks 
                         WHERE ((performer_number = employee_number)
         AND (creation_date >= start_date) 
-        AND (creation_date <= end_date)));
+        AND (actual_completion_date <= end_date)));
 
     tasks_in_time_count := (SELECT COUNT(*) 
                             FROM tasks
                             WHERE ((performer_number = employee_number)
         AND (creation_date >= start_date) 
-        AND (creation_date <= end_date) 
+        AND (actual_completion_date <= end_date) 
         AND (actual_completion_date <= planned_completion_date)));
 
     tasks_bad_time_count := (SELECT COUNT(*) 
                              FROM tasks 
                              WHERE ((performer_number = employee_number)
         AND (creation_date >= start_date) 
-        AND (creation_date <= end_date) 
+        AND (actual_completion_date <= end_date) 
         AND (actual_completion_date > planned_completion_date)));
 
     tasks_bad_time_not_completed_count := (SELECT COUNT(*) 
                                            FROM tasks 
                                            WHERE ((performer_number = employee_number)
         AND (creation_date >= start_date) 
-        AND (creation_date <= end_date) 
+        AND (actual_completion_date <= end_date) 
         AND (NOW() < planned_completion_date)
         AND (actual_completion_date IS NULL)));
 
@@ -401,7 +401,7 @@ BEGIN
                                           FROM tasks 
                                           WHERE ((performer_number = employee_number)
         AND (creation_date >= start_date) 
-        AND (creation_date <= end_date) 
+        AND (actual_completion_date <= end_date) 
         AND (NOW() >= planned_completion_date) 
         AND (actual_completion_date IS NULL)));
     
@@ -439,27 +439,27 @@ BEGIN
                         FROM tasks 
                         WHERE ((performer_number = employee_number)
         AND (creation_date >= start_date) 
-        AND (creation_date <= end_date)));
+        AND (actual_completion_date <= end_date)));
 
     tasks_in_time_count := (SELECT COUNT(*) 
                             FROM tasks
                             WHERE ((performer_number = employee_number)
         AND (creation_date >= start_date) 
-        AND (creation_date <= end_date) 
+        AND (actual_completion_date <= end_date) 
         AND (actual_completion_date <= planned_completion_date)));
 
     tasks_bad_time_count := (SELECT COUNT(*) 
                              FROM tasks 
                              WHERE ((performer_number = employee_number)
         AND (creation_date >= start_date) 
-        AND (creation_date <= end_date) 
+        AND (actual_completion_date <= end_date) 
         AND (actual_completion_date > planned_completion_date)));
 
     tasks_bad_time_not_completed_count := (SELECT COUNT(*) 
                                            FROM tasks 
                                            WHERE ((performer_number = employee_number)
         AND (creation_date >= start_date) 
-        AND (creation_date <= end_date) 
+        AND (actual_completion_date <= end_date) 
         AND (NOW() < planned_completion_date)
         AND (actual_completion_date IS NULL)));
 
@@ -467,7 +467,7 @@ BEGIN
                                           FROM tasks 
                                           WHERE ((performer_number = employee_number)
         AND (creation_date >= start_date) 
-        AND (creation_date <= end_date) 
+        AND (actual_completion_date <= end_date) 
         AND (NOW() >= planned_completion_date) 
         AND (actual_completion_date IS NULL)));
     
